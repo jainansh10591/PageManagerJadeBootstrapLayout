@@ -5,13 +5,14 @@ var Facebook = require('facebook-node-sdk');
 var requestedScope = ['manage_pages','publish_pages', 'ads_management'];
 
 router.get('/', function(req, res) {
-  res.render('index');
+  res.render('pages/index');
 });
 
 router.get('/login', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
+  console.log("1");
   req.facebook.api('/me', function(err, user) {
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('Hello, ' + JSON.stringify(user) + '!');
+    console.log("2");
+    res.render('pages/welcome');
   });
 });
 

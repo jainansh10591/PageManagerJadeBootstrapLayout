@@ -20,6 +20,8 @@
     "multer": "*",
     "mysql": "*",
     "serve-favicon": "~2.2.0",
-    "facebook-node-sdk": "*"
+    "facebook-node-sdk": "*",
+    "ejs": "^1.0.0",
+    "express-ejs-layouts": "^1.1.0"
   }
 }
