@@ -5,11 +5,6 @@ var Step = require('step');
 var url = require('url');
 
 var requestedScope = ['manage_pages','publish_pages', 'ads_management'];
-var postCategory = {
-  "all": "All Posts",
-  "published": "Published Posts",
-  "unpublished": "Unpublished Posts"
-};
 
 router.get('/', function(req, res) {
   if (!req.facebook) {
@@ -113,23 +108,28 @@ exports.checkNextPaginationPage = function(req, res, data){
 
 // Get all post of a page
 router.get('/page/:id', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
-    exports.getPagePosts(req, res, postCategory.all);
+    exports.getPagePosts(req, res, postsSelection.all);
 });
 
 router.get('/page/:id/all', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
-    exports.getPagePosts(req, res, postCategory.all);
+    exports.getPagePosts(req, res, postsSelection.all);
 });
 
 // get all published post
 router.get('/page/:id/published', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
-    exports.getPagePosts(req, res, postCategory.published);
+    exports.getPagePosts(req, res, postsSelection.published);
 });
 
 // get all unpublished posts
 router.get('/page/:id/unpublished', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
-    exports.getPagePosts(req, res, postCategory.unpublished);
+    exports.getPagePosts(req, res, postsSelection.unpublished);
 });
 
+var postsSelection = {
+  "all": "All Posts",
+  "published": "Published Posts",
+  "unpublished": "Unpublished Posts"
+}; 
 
 exports.getPageDetails = function(req, res, data) {
     req.facebook.api(data.params.page_info_url,'GET', function(err, result){
@@ -196,10 +196,10 @@ exports.getPagePosts = function(req, res, category){
     var data = exports.defaultData();
 
     data.page_post_heading = category;
-    if(category == postCategory.published){
+    if(category == postsSelection.published){
       data.active_link.published = true;
     }
-    else if(category == postCategory.unpublished){
+    else if(category == postsSelection.unpublished){
       data.active_link.unpublished = true;
     }
     else{
