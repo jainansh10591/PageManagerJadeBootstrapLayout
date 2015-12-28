@@ -40,9 +40,69 @@ router.get('/logout', Facebook.logout(), function(req, res) {
 
 // Get all pages owned by loggedIn User
 router.get('/me/pages', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
+  // var data = {
+  //     "pages": null,
+  //     "prev": null,
+  //     "next": null
+  //   };
+
+  // var query = req._parsedUrl.query;
+  // var accounts_url = '/me/accounts';
+  // if(query!=null){
+  //   accounts_url = accounts_url+'?'+query;
+  // }
+  
+
+  // Step(
+  //       function getOwnedPages() {
+  //         req.facebook.api(accounts_url, 'GET', this);
+  //       },
+  //       function checkPreviousPaginationPage(err, result) {
+  //         if(err){
+  //           res.render('pages/error');
+  //           return;
+  //         }
+
+  //         data.pages = result;
+
+  //         if(data.pages.paging!=null && data.pages.paging.previous!=null){
+  //           req.facebook.api(data.pages.paging.previous,'GET' ,this);
+  //         }
+  //       },
+  //       function checkNextPaginationPage(err, result) {
+  //         if(err){
+  //           res.render('pages/error');
+  //           return;
+  //         }
+
+  //         if(result!=null && result.data.length!=0){
+  //           data.prev = accounts_url+ url.parse(data.pages.paging.previous).search;
+  //         }
+          
+  //         if(data.pages.paging!=null && data.pages.paging.next!=null){
+  //           req.facebook.api(data.pages.paging.next,'GET' ,this);
+  //         }
+  //       },
+  //       function (err, result) {
+  //         if(err){
+  //           res.render('pages/error');
+  //           return;
+  //         }
+
+  //         if(result!=null && result.data.length !=0){
+  //           data.next = accounts_url+ url.parse(data.pages.paging.next).search;
+  //         }
+
+  //         res.render('pages/pages', data);
+  //       }
+  //   );
+
+
   req.facebook.api('/me/accounts?fields=name,id,category,perms,access_token,picture', function(err, result) {
     res.render('pages/pages', {
-      "pages": result.data 
+      "pages": result,
+      "prev": null,
+      "next": null 
     });
   });
 });
