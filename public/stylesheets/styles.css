@@ -159,3 +159,21 @@ body{
 .page-row:hover, .post-row:hover {
     background-color: #EDF0F9;
 }
+
+.empty{
+    padding: 10px 10px;
+}
+
+.index-button a{
+    background-color: #365690;
+    padding: 15px 15px;
+    border-radius: 3px;
+    color: white;  
+    font-size: 18px;
+    margin: 15px;
+}
+
+.index-button a:hover{
+    text-decoration: none;
+}
+

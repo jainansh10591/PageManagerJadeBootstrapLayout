@@ -7,7 +7,7 @@
 <body>
 
 	<div class="header">
-		<% include ../partials/header %>
+		<% include ../partials/loggedInHeader %>
 	</div>
 
 
@@ -19,21 +19,21 @@
 	        </div>
 	    </div>
 	    <div class="row-fluid">  
-			<% if(posts.length != 0){ %>
+			<% if(posts!=null && posts.data!=null && posts.data.length != 0){ %>
 				<div class="white page-table ">
 					<div class="page-table-header row-fluid">
 						<div class="span8 page-table-data page-table-header-data">Posts</div>
 						<div class="span4 page-table-data page-table-header-data">Published</div>
 					</div>
-					<% for(var i=0; i < posts.length; i++) { %>
+					<% for(var i=0; i < posts.data.length; i++) { %>
 						<div class="page-table-content post-row row-fluid">
-					    	<div class="span8 page-table-data"><a href='/post/<%= posts[i].id %>'> <%= posts[i].message %> </a></div>
-					    	<div class="span4 page-table-data"><%= posts[i].created_time %></div>
+					    	<div class="span8 page-table-data"><a href='/post/<%= posts.data[i].id %>'> <%= posts.data[i].message %> </a></div>
+					    	<div class="span4 page-table-data"><%= posts.data[i].created_time %></div>
 						</div>
 					<% } %>
 				</div>
 			<% } else{ %>  
-			   <div> No Posts on this page !</div>
+			   <div class="white empty"> No Posts on this page !</div>
 			<% } %>	        
 	    </div>
 	</div>

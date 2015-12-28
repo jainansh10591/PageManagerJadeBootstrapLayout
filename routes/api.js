@@ -5,13 +5,32 @@ var Facebook = require('facebook-node-sdk');
 var requestedScope = ['manage_pages','publish_pages', 'ads_management'];
 
 router.get('/', function(req, res) {
-  res.render('pages/index');
+  if (!req.facebook) {
+      Facebook.middleware(config)(req, res, afterNew);
+  }
+
+  req.facebook.getUser(function(err, user) {
+      if (err) {
+        res.render('pages/error');
+      }
+      else {
+        var data = {};
+        if (user === 0) { 
+          data.loggedIn = false;
+        }
+        else {
+          data.loggedIn = true;
+          
+        }
+        console.log("---");
+        console.log(data);
+        res.render('pages/index', data);
+      }
+  });
 });
 
 router.get('/login', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
-  req.facebook.api('/me', function(err, user) {
-    res.render('pages/welcome');
-  });
+  res.redirect('/me/pages');
 });
 
 router.get('/logout', Facebook.logout(), function(req, res) {
@@ -38,7 +57,7 @@ router.get('/page/:id', Facebook.loginRequired({scope: requestedScope}), functio
     res.render('pages/posts', {
       "page_name": result.name,
       "page_about": result.about,
-      "posts": result.feed.data 
+      "posts": result.feed 
     });
   });
 });
