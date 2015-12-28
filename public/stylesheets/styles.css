@@ -177,3 +177,11 @@ body{
     text-decoration: none;
 }
 
+.seperator{
+    border-bottom: 1px solid #DCDEE3;
+}
+
+.filter{
+    padding: 0px 15px;
+}
+

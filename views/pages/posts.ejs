@@ -20,13 +20,30 @@
 	    </div>
 	    <div class="row-fluid">  
 			<% if(posts!=null && posts.data!=null && posts.data.length != 0){ %>
+				<div class="span12 white seperator filter">
+					<nav>
+					  <ul class="pager pull-right">
+					  	<% if(prev==null){ %>
+					    	<li class="disabled"><a href="#">Previous</a></li>
+					    <% }else{ %>
+					    	<li><a href="#">Previous</a></li>
+					    <% }%>
+
+					    <% if(next==null){ %>
+					    	<li class="disabled"><a href="#">Next</a></li>
+					    <% }else{ %>
+					    	<li><a href="#">Next</a></li>
+					    <% }%>
+					  </ul>
+					</nav>
+				</div>
 				<div class="white page-table ">
-					<div class="page-table-header row-fluid">
+					<div class="page-table-header row-fluid seperator" >
 						<div class="span8 page-table-data page-table-header-data">Posts</div>
 						<div class="span4 page-table-data page-table-header-data">Published</div>
 					</div>
 					<% for(var i=0; i < posts.data.length; i++) { %>
-						<div class="page-table-content post-row row-fluid">
+						<div class="page-table-content post-row row-fluid seperator">
 					    	<div class="span8 page-table-data"><a href='/post/<%= posts.data[i].id %>'> <%= posts.data[i].message %> </a></div>
 					    	<div class="span4 page-table-data"><%= posts.data[i].created_time %></div>
 						</div>
