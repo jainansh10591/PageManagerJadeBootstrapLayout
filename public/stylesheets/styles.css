@@ -155,6 +155,7 @@ body{
 .post-row{
     cursor: pointer;
 }
-.post-row:hover {
-    
+
+.page-row:hover, .post-row:hover {
+    background-color: #EDF0F9;
 }

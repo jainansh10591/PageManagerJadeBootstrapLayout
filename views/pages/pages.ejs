@@ -19,14 +19,14 @@
 	    </div>
 	    <div class="row-fluid ">  
 			<% if(pages.length != 0){ %>
-				<div class="white page-table span12">
-					<div class="page-table-header span12">
+				<div class="white page-table">
+					<div class="page-table-header row-fluid">
 						<div class="span6 page-table-data page-table-header-data">Page Name</div>
 						<div class="span3 page-table-data page-table-header-data">Details</div>		
 						<div class="span3 page-table-data page-table-header-data">Manage</div>
 					</div>
 					<% for(var i=0; i < pages.length; i++) { %>
-						<div class="page-table-content">
+						<div class="page-table-content page-row row-fluid">
 					    	<div class="span6 page-table-data"><a href='/page/<%= pages[i].id %>'> <%= pages[i].name %> </a></div>
 					    	<div class="span3 page-table-data"><a href='/page/<%= pages[i].id %>/view'>View</a></div>
 					    	<div class="span3 page-table-data"><a href='/page/<%= pages[i].id %>'>Manage</a></div>
