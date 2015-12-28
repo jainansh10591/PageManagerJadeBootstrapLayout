@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var Facebook = require('facebook-node-sdk');
+var Step = require('step');
+var url = require('url');
 
 var requestedScope = ['manage_pages','publish_pages', 'ads_management'];
 
@@ -46,54 +48,74 @@ router.get('/me/pages', Facebook.loginRequired({scope: requestedScope}), functio
 });
 
 
-exports.checkPostPrevious = function(req, res, data) {
-    // checking prev pagination
-
-    if(data.posts.paging!=null && data.posts.paging.previous!=null){
-      console.log(data.posts.paging);
-      req.facebook.api(data.posts.paging.previous,'GET' ,function(err, prev) {
-          if(prev.data.length !=0){
-            data.prev = data.posts.paging.previous;
-          }
-          exports.checkPostNext(req, res, data);
-      });
-    }
-    else{
-      exports.checkPostNext(req, res, data);
-    }
-};
-
-exports.checkPostNext = function(req, res, data) {
-    // checking prev pagination
-    if(data.posts.paging!=null && data.posts.paging.next!=null){
-      req.facebook.api(data.posts.paging.next,'GET' ,function(err, next) {
-          if(next.data.length !=0){
-            data.next = data.posts.paging.next;
-          }
-          exports.displayPosts(req, res, data);
-      });
-    }
-    else{
-      exports.displayPosts(req, res, data);
-    }};
-
-exports.displayPosts = function(req, res, data) {
-    res.render('pages/posts', data);
-};
-
 // Get all post of a page
 router.get('/page/:id', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
-  req.facebook.api('/'+req.params.id+'?fields=id,name,about,feed.limit(25)', 'GET', function(err, result) {
-    var data = {};
-    data.posts = result.feed;
-    data.page_name = result.name;
-    data.page_about = result.about;
-    data.prev = null;
-    data.next = null;
-    
-    exports.checkPostPrevious(req, res, data);
+    var data = {
+      "page_details": null,
+      "posts": null,
+      "prev": null,
+      "next": null
+    };
 
-  });
+    var id = req.params.id;
+    var query = req._parsedUrl.query;
+    var feed_url = '/'+id+'/feed';
+    if(query!=null){
+      feed_url = feed_url+'?'+query;
+    }
+
+    Step(
+        function getPageDetails() {
+            req.facebook.api('/'+req.params.id +'?fields=name,id,about,category','GET', this);
+        },
+        function getFeeds(err, result) {
+          if(err){
+            res.render('pages/error');
+            return;
+          }
+
+          data.page_details = result;
+
+          req.facebook.api(feed_url, 'GET', this);
+        },
+        function checkPreviousPagination(err, result) {
+          if(err){
+            res.render('pages/error');
+            return;
+          }
+
+          data.posts = result;
+
+          if(result.paging!=null && result.paging.previous!=null){
+            req.facebook.api(result.paging.previous,'GET' ,this);
+          }
+        },
+        function checkNextPagination(err, result) {
+          if(err){
+            res.render('pages/error');
+            return;
+          }
+
+          if(result!=null && result.data.length !=0){
+            data.prev = '/page/'+id+ url.parse(data.posts.paging.previous).search;
+          }
+          
+          if(data.posts.paging!=null && data.posts.paging.next!=null){
+            req.facebook.api(data.posts.paging.next,'GET' ,this);
+          }
+        },
+        function (err, result) {
+          if(err){
+            res.render('pages/error');
+            return;
+          }
+
+          if(result!=null && result.data.length !=0){
+            data.next = '/page/'+id+ url.parse(data.posts.paging.next).search;
+          }
+          res.render('pages/posts', data);
+        }
+    );
 });
 
 
