@@ -1,5 +1,5 @@
 .brand {
-    font-family: 'Arvo';
+    font-family: helvetica,arial,sans-serif;
 }
 
 a.plain:link {
@@ -59,11 +59,11 @@ h5 {
 }
 
 legend {
-    font-family: 'Andika';
+    font-family: helvetica,arial,sans-serif;
 }
 
 .home-hero {
-    font-family: "Andika";
+    font-family: helvetica,arial,sans-serif;
     font-size: 36;
     color: white;
     background-image: url('../img/index.jpg');
@@ -89,7 +89,7 @@ legend {
 
 
 .home-hero .btn {
-    font-family: "arvo";
+    font-family: helvetica,arial,sans-serif;
     width: 160px;
     margin: 10px 4px;
 }
@@ -111,3 +111,50 @@ body{
     background-color: #E9EAED;
 }
 
+.heading{    
+    padding: 15px 15px ;
+    border-bottom: 1px solid #E5E5E5;
+    font-family: helvetica,arial,sans-serif;
+    font-size: 16px;
+    color: #4E5665;
+    margin-bottom: 12px;
+}
+
+.white{
+    background-color: #FFF;
+}
+
+.page-table{
+
+}
+
+.page-table-header{
+    background-color: #F6F7F8;
+    background-image: linear-gradient(#FFF, #EFEFEF);
+}
+
+.page-table-data{
+    word-wrap: break-word;
+    padding: 10px 20px;
+}
+
+.page-table-content{
+    padding-top: 10px;
+}
+
+.page-table-header-data{
+    border-right-style: solid;
+    border-width: 0px 1px 0px 0px;
+    border-color: #D3D3D3;
+}
+
+.heading h1, .heading h4{
+    color: #4E5665;    
+}
+
+.post-row{
+    cursor: pointer;
+}
+.post-row:hover {
+    
+}

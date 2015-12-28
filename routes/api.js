@@ -9,9 +9,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/login', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
-  console.log("1");
   req.facebook.api('/me', function(err, user) {
-    console.log("2");
     res.render('pages/welcome');
   });
 });
@@ -27,17 +25,21 @@ router.get('/me', Facebook.loginRequired({scope: requestedScope}), function(req,
 });
 
 router.get('/me/pages', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
-  req.facebook.api('/me/accounts', function(err, user) {
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('Hello, ' + JSON.stringify(user) + '!');
+  req.facebook.api('/me/accounts?fields=name,id,category,perms,access_token,picture', function(err, result) {
+    res.render('pages/pages', {
+      "pages": result.data 
+    });
   });
 });
 
 // to get all post of a page
 router.get('/page/:id', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
-  req.facebook.api('/'+req.params.id+'/feed', 'GET', function(err, user) {
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('Hello, ' + JSON.stringify(user) + '!');
+  req.facebook.api('/'+req.params.id+'?fields=name,id,feed,about', 'GET', function(err, result) {
+    res.render('pages/posts', {
+      "page_name": result.name,
+      "page_about": result.about,
+      "posts": result.feed.data 
+    });
   });
 });
 
@@ -57,6 +59,13 @@ router.get('/page/:id/fb', Facebook.loginRequired({scope: requestedScope}), func
   });
 });
 
+
+router.get('/page/:id/view', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
+  req.facebook.api('/me', function(err, user) {
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.end('Hello, ' + JSON.stringify(user) + '!');
+  });
+});
 
 router.get('/page/:id/edit', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
   req.facebook.api('/me', function(err, user) {

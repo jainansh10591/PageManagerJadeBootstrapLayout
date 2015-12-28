@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<% include ../partials/head %>
+</head>
+
+<body>
+
+	<div class="header">
+		<% include ../partials/header %>
+	</div>
+
+
+	<div class="container">
+	    <div class="row-fluid">
+	        <div class="span12 heading white">
+	        	Pages Owned by You
+	        </div>
+	    </div>
+	    <div class="row-fluid ">  
+			<% if(pages.length != 0){ %>
+				<div class="white page-table span12">
+					<div class="page-table-header span12">
+						<div class="span6 page-table-data page-table-header-data">Page Name</div>
+						<div class="span3 page-table-data page-table-header-data">Details</div>		
+						<div class="span3 page-table-data page-table-header-data">Manage</div>
+					</div>
+					<% for(var i=0; i < pages.length; i++) { %>
+						<div class="page-table-content">
+					    	<div class="span6 page-table-data"><a href='/page/<%= pages[i].id %>'> <%= pages[i].name %> </a></div>
+					    	<div class="span3 page-table-data"><a href='/page/<%= pages[i].id %>/view'>View</a></div>
+					    	<div class="span3 page-table-data"><a href='/page/<%= pages[i].id %>'>Manage</a></div>
+						</div>
+					<% } %>
+				</div>
+			<% } else{ %>  
+			   <div> No Pages owned by you !</div>
+			<% } %>	        
+	    </div>
+	</div>
+
+	<footer class="footer">
+		<% include ../partials/footer %>
+	</footer>
+
+</body>
+</html>
