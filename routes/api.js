@@ -40,72 +40,70 @@ router.get('/logout', Facebook.logout(), function(req, res) {
 
 // Get all pages owned by loggedIn User
 router.get('/me/pages', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
-  // var data = {
-  //     "pages": null,
-  //     "prev": null,
-  //     "next": null
-  //   };
-
-  // var query = req._parsedUrl.query;
-  // var accounts_url = '/me/accounts';
-  // if(query!=null){
-  //   accounts_url = accounts_url+'?'+query;
-  // }
-  
-
-  // Step(
-  //       function getOwnedPages() {
-  //         req.facebook.api(accounts_url, 'GET', this);
-  //       },
-  //       function checkPreviousPaginationPage(err, result) {
-  //         if(err){
-  //           res.render('pages/error');
-  //           return;
-  //         }
-
-  //         data.pages = result;
-
-  //         if(data.pages.paging!=null && data.pages.paging.previous!=null){
-  //           req.facebook.api(data.pages.paging.previous,'GET' ,this);
-  //         }
-  //       },
-  //       function checkNextPaginationPage(err, result) {
-  //         if(err){
-  //           res.render('pages/error');
-  //           return;
-  //         }
-
-  //         if(result!=null && result.data.length!=0){
-  //           data.prev = accounts_url+ url.parse(data.pages.paging.previous).search;
-  //         }
-          
-  //         if(data.pages.paging!=null && data.pages.paging.next!=null){
-  //           req.facebook.api(data.pages.paging.next,'GET' ,this);
-  //         }
-  //       },
-  //       function (err, result) {
-  //         if(err){
-  //           res.render('pages/error');
-  //           return;
-  //         }
-
-  //         if(result!=null && result.data.length !=0){
-  //           data.next = accounts_url+ url.parse(data.pages.paging.next).search;
-  //         }
-
-  //         res.render('pages/pages', data);
-  //       }
-  //   );
-
-
-  req.facebook.api('/me/accounts?fields=name,id,category,perms,access_token,picture', function(err, result) {
-    res.render('pages/pages', {
-      "pages": result,
+  var data = {
+      "pages": null,
       "prev": null,
-      "next": null 
-    });
-  });
+      "next": null,
+      "params": {
+
+      }
+    };
+
+  var query = req._parsedUrl.query;
+  var accounts_url = '/me/accounts';
+  if(query!=null){
+    accounts_url = accounts_url+'?'+query;
+  }
+  data.params.accounts_url = accounts_url;
+  exports.getOwnedPages(req, res, data);  
 });
+
+exports.getOwnedPages = function(req, res, data){
+  req.facebook.api(data.params.accounts_url, 'GET', function(err, result){
+    if(err){
+      res.render('pages/error');
+      return;
+    }
+    data.pages = result;
+    exports.checkPreviousPaginationPage(req, res, data);
+  });
+}
+exports.checkPreviousPaginationPage = function(req, res, data){
+  if(data.pages.paging!=null && data.pages.paging.previous!=null){
+      req.facebook.api(data.pages.paging.previous,'GET' ,function(err, result){
+        if(err){
+          res.render('pages/error');
+          return;
+        }
+        if(result!=null && result.data.length!=0){
+          data.prev = data.params.accounts_url+ url.parse(data.pages.paging.previous).search;
+        }
+        exports.checkNextPaginationPage(req, res, data);
+      });
+  }
+  else{
+    exports.checkNextPaginationPage(req, res, data);
+  }
+}
+exports.checkNextPaginationPage = function(req, res, data){
+  if(data.pages.paging!=null && data.pages.paging.next!=null){
+      req.facebook.api(data.pages.paging.next,'GET' ,function(err, result){
+        if(err){
+          res.render('pages/error');
+          return;
+        }
+        if(result!=null && result.data.length!=0){
+          data.next = data.params.accounts_url+ url.parse(data.pages.paging.next).search;
+        }
+        data.params = null;
+        res.render('pages/pages', data);
+      });
+  }
+  else{
+    data.params = null;
+    res.render('pages/pages', data);
+  }
+}
 
 
 // Get all post of a page
@@ -114,71 +112,86 @@ router.get('/page/:id', Facebook.loginRequired({scope: requestedScope}), functio
       "page_details": null,
       "posts": null,
       "prev": null,
-      "next": null
+      "next": null,
+      "params": {
+      }
     };
 
-    var id = req.params.id;
+    data.params.id= req.params.id;
+
     var query = req._parsedUrl.query;
-    var feed_url = '/'+id+'/feed';
+    var feed_url = '/'+data.params.id+'/feed';
     if(query!=null){
       feed_url = feed_url+'?'+query;
     }
+    data.params.feed_url = feed_url;
 
-    Step(
-        function getPageDetails() {
-            req.facebook.api('/'+req.params.id +'?fields=name,id,about,category','GET', this);
-        },
-        function getFeeds(err, result) {
-          if(err){
-            res.render('pages/error');
-            return;
-          }
-
-          data.page_details = result;
-
-          req.facebook.api(feed_url, 'GET', this);
-        },
-        function checkPreviousPagination(err, result) {
-          if(err){
-            res.render('pages/error');
-            return;
-          }
-
-          data.posts = result;
-
-          if(result.paging!=null && result.paging.previous!=null){
-            req.facebook.api(result.paging.previous,'GET' ,this);
-          }
-        },
-        function checkNextPagination(err, result) {
-          if(err){
-            res.render('pages/error');
-            return;
-          }
-
-          if(result!=null && result.data.length !=0){
-            data.prev = '/page/'+id+ url.parse(data.posts.paging.previous).search;
-          }
-          
-          if(data.posts.paging!=null && data.posts.paging.next!=null){
-            req.facebook.api(data.posts.paging.next,'GET' ,this);
-          }
-        },
-        function (err, result) {
-          if(err){
-            res.render('pages/error');
-            return;
-          }
-
-          if(result!=null && result.data.length !=0){
-            data.next = '/page/'+id+ url.parse(data.posts.paging.next).search;
-          }
-          res.render('pages/posts', data);
-        }
-    );
+    data.params.page_info_url = '/'+req.params.id +'?fields=name,id,about,category';
+    exports.getPageDetails(req, res, data);
 });
 
 
+exports.getPageDetails = function(req, res, data) {
+    req.facebook.api(data.params.page_info_url,'GET', function(err, result){
+      if(err){
+        res.render('pages/error');
+        return;
+      }
+      data.page_details = result;
+      exports.getFeeds(req, res, data);
+    });
+};
+
+exports.getFeeds = function(req, res, data) {
+    req.facebook.api(data.params.feed_url,'GET', function(err, result){
+      if(err){
+        res.render('pages/error');
+        return;
+      }
+      data.posts = result;
+      exports.checkPreviousPagination(req, res, data);
+    });
+};
+exports.checkPreviousPagination = function(req, res, data) {
+
+    if(data.posts.paging!=null && data.posts.paging.previous!=null){
+      req.facebook.api(data.posts.paging.previous,'GET' ,function(err, result){
+        if(err){
+          res.render('pages/error');
+          return;
+        }
+        if(result!=null && result.data.length !=0){
+            data.prev = '/page/'+data.params.id+ url.parse(data.posts.paging.previous).search;
+        }
+        exports.checkNextPagination(req, res, data);
+      });
+    }
+    else{
+      exports.checkNextPagination(req, res, data);
+    }
+};
+exports.checkNextPagination = function(req, res, data) {
+    if(data.posts.paging!=null && data.posts.paging.next!=null){
+      req.facebook.api(data.posts.paging.next,'GET' ,function(err, result){
+        if(err){
+          res.render('pages/error');
+          return;
+        }
+        if(result!=null && result.data.length !=0){
+            data.next = '/page/'+data.params.id+ url.parse(data.posts.paging.next).search;
+        }
+        
+        data.params = null;
+        res.render('pages/posts', data);
+      });
+    }
+    else{
+      data.params = null;
+      res.render('pages/posts', data);
+    }
+};
+
+//
 router.get('/page/:id/fb', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
   data = {};
   data.message = "new hello";
