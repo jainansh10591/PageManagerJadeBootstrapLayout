@@ -27,20 +27,16 @@ router.get('/', function(req, res) {
   });
 });
 
+// Login
 router.get('/login', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
   res.redirect('/me/pages');
 });
 
+// Logout
 router.get('/logout', Facebook.logout(), function(req, res) {
 });
 
-router.get('/me', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
-  req.facebook.api('/me', function(err, user) {
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('Hello, ' + JSON.stringify(user) + '!');
-  });
-});
-
+// Get all pages owned by loggedIn User
 router.get('/me/pages', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
   req.facebook.api('/me/accounts?fields=name,id,category,perms,access_token,picture', function(err, result) {
     res.render('pages/pages', {
@@ -49,9 +45,9 @@ router.get('/me/pages', Facebook.loginRequired({scope: requestedScope}), functio
   });
 });
 
-// to get all post of a page
+// Get all post of a page
 router.get('/page/:id', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
-  req.facebook.api('/'+req.params.id+'?fields=name,id,feed,about', 'GET', function(err, result) {
+  req.facebook.api('/'+req.params.id+'?fields=id,name,about,feed.limit(100)', 'GET', function(err, result) {
     res.render('pages/posts', {
       "page_name": result.name,
       "page_about": result.about,
@@ -60,9 +56,11 @@ router.get('/page/:id', Facebook.loginRequired({scope: requestedScope}), functio
   });
 });
 
+
 router.get('/page/:id/fb', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
   data = {};
-  data.message = "hello";
+  data.message = "new hello";
+  data.access_token = "CAACEdEose0cBAKluzk7QZAvF9ErHzEc6Dc7hmcfZBBY1WCd1R1WS5wDQVrldA6AzxafTLDJWrKCIihhAziO8N71i176LTVzD8DQKlZA4mJJu5ZAQrWocKI3UGcHt8TP6HjCxxihZCOdqdpb3EikSBaVsna4ogsx3YwQAwOvLNsFMnJFqlFJZADUVFZCfS2uhr4ZD";
   console.log(data);
   req.facebook.api('/'+req.params.id+'/feed', 'POST', data , function(err, user) {
   	if(err){
@@ -71,7 +69,7 @@ router.get('/page/:id/fb', Facebook.loginRequired({scope: requestedScope}), func
   	}
     else{
     	res.writeHead(200, {'Content-Type': 'text/plain'});
-    	res.end('Hello, ' + '!');
+    	res.end('Hello, ' + JSON.stringify(user) +'!');
 	}
   });
 });
