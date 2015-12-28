@@ -5,6 +5,11 @@ var Step = require('step');
 var url = require('url');
 
 var requestedScope = ['manage_pages','publish_pages', 'ads_management'];
+var postCategory = {
+  "all": "All Posts",
+  "published": "Published Posts",
+  "unpublished": "Unpublished Posts"
+};
 
 router.get('/', function(req, res) {
   if (!req.facebook) {
@@ -108,26 +113,21 @@ exports.checkNextPaginationPage = function(req, res, data){
 
 // Get all post of a page
 router.get('/page/:id', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
-    var data = {
-      "page_details": null,
-      "posts": null,
-      "prev": null,
-      "next": null,
-      "params": {
-      }
-    };
+    exports.getPagePosts(req, res, postCategory.all);
+});
 
-    data.params.id= req.params.id;
+router.get('/page/:id/all', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
+    exports.getPagePosts(req, res, postCategory.all);
+});
 
-    var query = req._parsedUrl.query;
-    var feed_url = '/'+data.params.id+'/feed';
-    if(query!=null){
-      feed_url = feed_url+'?'+query;
-    }
-    data.params.feed_url = feed_url;
+// get all published post
+router.get('/page/:id/published', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
+    exports.getPagePosts(req, res, postCategory.published);
+});
 
-    data.params.page_info_url = '/'+req.params.id +'?fields=name,id,about,category';
-    exports.getPageDetails(req, res, data);
+// get all unpublished posts
+router.get('/page/:id/unpublished', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
+    exports.getPagePosts(req, res, postCategory.unpublished);
 });
 
 
@@ -189,6 +189,53 @@ exports.checkNextPagination = function(req, res, data) {
       data.params = null;
       res.render('pages/posts', data);
     }
+};
+
+exports.getPagePosts = function(req, res, category){
+
+    var data = exports.defaultData();
+
+    data.page_post_heading = category;
+    if(category == postCategory.published){
+      data.active_link.published = true;
+    }
+    else if(category == postCategory.unpublished){
+      data.active_link.unpublished = true;
+    }
+    else{
+      data.active_link.all = true;
+    }
+
+    data.params.id= req.params.id;
+    data.base_url = '/page/'+req.params.id;
+    var query = req._parsedUrl.query;
+    var feed_url = '/'+data.params.id+'/feed';
+    if(query!=null){
+      feed_url = feed_url+'?'+query;
+    }
+    data.params.feed_url = feed_url;
+
+    data.params.page_info_url = '/'+req.params.id +'?fields=name,id,about,category';
+    exports.getPageDetails(req, res, data);
+};
+
+exports.defaultData = function(){
+  var data = {
+      "page_details": null,
+      "posts": null,
+      "prev": null,
+      "next": null,
+      "active_link": {
+        "all": null,
+        "published": null,
+        "unpublished": null
+      },
+      "page_post_heading": null,
+      "base_url": null,
+      "params": {
+      }
+    };
+  return data;
 };
 
 //

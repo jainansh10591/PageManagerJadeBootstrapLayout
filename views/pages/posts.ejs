@@ -20,19 +20,33 @@
 	    </div>
 	    <div class="row-fluid">  
 			<% if(posts!=null && posts.data!=null && posts.data.length != 0){ %>
-				<% include ../partials/filter %>
-				<div class="white page-table ">
-					<div class="page-table-header row-fluid seperator" >
-						<div class="span8 page-table-data page-table-header-data">Posts</div>
-						<div class="span4 page-table-data page-table-header-data">Published</div>
+					<div class="span3 white page-side-bar">
+						<ul class="nav nav-pills nav-stacked">
+						  <li role="presentation" class="<%= active_link.all ? 'active' : '' %>"><a href="<%= base_url %>/all">All</a></li>
+						  <li role="presentation" class="<%= active_link.published ? 'active' : '' %>"><a href="<%= base_url %>/published">Published</a></li>
+						  <li role="presentation" class="<%= active_link.unpublished ? 'active' : '' %>"><a href="<%= base_url %>/unpublished">Unpublished</a></li>
+						</ul>
 					</div>
-					<% for(var i=0; i < posts.data.length; i++) { %>
-						<div class="page-table-content post-row row-fluid seperator">
-					    	<div class="span8 page-table-data"><a href='/post/<%= posts.data[i].id %>'> <%= posts.data[i].message %> </a></div>
-					    	<div class="span4 page-table-data"><%= posts.data[i].created_time %></div>
+					<div class="span9">
+						<div class="row-fluid">
+							<div class="span12 white seperator page-post-heading">
+								<%= page_post_heading %>
+							</div>
+						<div>
+						<% include ../partials/filter %>
+						<div class="white page-table ">
+							<div class="page-table-header row-fluid seperator" >
+								<div class="span8 page-table-data page-table-header-data">Posts</div>
+								<div class="span4 page-table-data page-table-header-data">Published</div>
+							</div>
+							<% for(var i=0; i < posts.data.length; i++) { %>
+								<div class="page-table-content post-row row-fluid seperator">
+							    	<div class="span8 page-table-data"><a href='/post/<%= posts.data[i].id %>'> <%= posts.data[i].message %> </a></div>
+							    	<div class="span4 page-table-data"><%= posts.data[i].created_time %></div>
+								</div>
+							<% } %>
 						</div>
-					<% } %>
-				</div>
+					</div>
 			<% } else{ %>  
 			   <div class="white empty"> No Posts on this page !</div>
 			<% } %>	        

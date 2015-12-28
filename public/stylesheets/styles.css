@@ -182,6 +182,14 @@ body{
 }
 
 .filter{
-    padding: 0px 15px;
+    padding: 0px 8px;
+}
+
+.page-side-bar{
+    padding: 10px 10px;
+}
+
+.page-post-heading{
+    padding: 10px 15px;
 }
 
