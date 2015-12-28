@@ -22,8 +22,6 @@ router.get('/', function(req, res) {
           data.loggedIn = true;
           
         }
-        console.log("---");
-        console.log(data);
         res.render('pages/index', data);
       }
   });
