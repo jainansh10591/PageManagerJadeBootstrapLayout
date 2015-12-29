@@ -4,7 +4,7 @@ var Facebook = require('facebook-node-sdk');
 var Step = require('step');
 var url = require('url');
 
-var requestedScope = ['manage_pages','publish_pages', 'ads_management'];
+var requestedScope = ['manage_pages','publish_pages', 'ads_management', 'read_insights'];
 
 router.get('/', function(req, res) {
   if (!req.facebook) {
@@ -131,6 +131,7 @@ var postsSelection = {
   "unpublished": "Unpublished Posts"
 }; 
 
+
 exports.getPageDetails = function(req, res, data) {
     req.facebook.api(data.params.page_info_url,'GET', function(err, result){
       if(err){
@@ -182,13 +183,47 @@ exports.checkNextPagination = function(req, res, data) {
         }
         
         data.params = null;
-        res.render('pages/posts', data);
+        exports.getIds(data);
+
+        exports.getReaches(req,res,data);
       });
     }
     else{
       data.params = null;
-      res.render('pages/posts', data);
+      exports.getReaches(req,res,data);
     }
+};
+
+exports.getReaches = function(req, res, data){
+  if(data.reachs_id!=null){
+    req.facebook.api('/insights/post_impressions_unique?ids='+data.reachs_id,'GET' ,function(err, result){
+      if(err){
+        res.render('pages/error');
+        return;
+      }
+      else{
+        data.reachs = result;
+        // console.log(data.reachs['1552417364837853_1558986087514314'].data[0]);
+        res.render('pages/posts', data);
+      }
+    });
+  }
+  else{
+    res.render('pages/posts', data);
+  }
+};
+
+exports.getIds = function(data){
+  if(data.posts==null)return;
+
+  var ids ="";
+  for(var i=0;i<data.posts.data.length;i++){
+    ids = ids+data.posts.data[i].id;
+    if(i < data.posts.data.length-1){
+      ids=ids+",";
+    }
+  }
+  data.reachs_id = ids;
 };
 
 exports.getPagePosts = function(req, res, category){
@@ -223,6 +258,8 @@ exports.defaultData = function(){
   var data = {
       "page_details": null,
       "posts": null,
+      "reachs": null,
+      "reachs_id": null,
       "prev": null,
       "next": null,
       "active_link": {
