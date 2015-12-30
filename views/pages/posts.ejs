@@ -30,9 +30,25 @@
 					<div class="span9">
 						<div class="row-fluid">
 							<div class="span12 white seperator page-post-heading">
-								<%= page_post_heading %>
+								<div class="span6"> <%= page_post_heading %> </div>
+								<div class="span6">
+									<div class="pull-right">
+									  	<% if(active_link.all){ %>
+									    	<div class="dropdown">
+												<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-plus"></span> Create
+												<span class="caret"></span></button>
+												<ul class="dropdown-menu">
+													<li><a href="#">Published Post</a></li>
+													<li><a href="#">Unpublished Post</a></li>
+												</ul>
+											</div>
+									    <% }else{ %>
+									    	<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create</button>
+									    <% }%>
+									</div>
+								</div>
 							</div>
-						<div>
+						</div>
 						<% include ../partials/filter %>
 						<div class="white page-table ">
 							<div class="page-table-header row-fluid seperator" >
@@ -53,11 +69,8 @@
 			   <div class="white empty"> No Posts on this page !</div>
 			<% } %>	        
 	    </div>
-	</div>
 
-	<footer class="footer">
 		<% include ../partials/footer %>
-	</footer>
-
+	</div>
 </body>
 </html>
