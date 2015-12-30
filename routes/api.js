@@ -203,7 +203,6 @@ exports.getReaches = function(req, res, data){
       }
       else{
         data.reachs = result;
-        // console.log(data.reachs['1552417364837853_1558986087514314'].data[0]);
         res.render('pages/posts', data);
       }
     });
