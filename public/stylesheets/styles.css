@@ -193,3 +193,9 @@ body{
     padding: 15px 15px;
 }
 
+.new-post-modal-nav li.active a,
+.new-post-modal-nav li.active a:focus,
+.new-post-modal-nav li.active a:hover{
+    color: #FFF;
+    background-color: #337AB7
+}
