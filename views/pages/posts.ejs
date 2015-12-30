@@ -43,7 +43,9 @@
 												</ul>
 											</div>
 									    <% }else{ %>
-									    	<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create</button>
+									    	<!-- Trigger the modal with a button -->
+											<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newPostForm"><span class="glyphicon glyphicon-plus"></span> Create</button>
+											<% include ../partials/publishedPostModal %>
 									    <% }%>
 									</div>
 								</div>
