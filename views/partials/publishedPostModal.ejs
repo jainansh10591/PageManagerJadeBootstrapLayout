@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div id="newPostForm" class="new-post-modal modal fade" role="dialog">
+<div id="newPostModal" class="new-post-modal modal fade" role="dialog">
   <div class="modal-dialog ">
 
     <!-- Modal content-->
@@ -19,8 +19,9 @@
 
           <div class="tab-content">
             <div id="new-post-modal-status" class="tab-pane fade in active">
-              <form method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= active_link.unpublished ? 'unpublished' : 'published' %>">
-                <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.."></textarea>
+              <form id="newPostForm" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= active_link.unpublished ? 'unpublished' : 'published' %>">
+                <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." required 
+                oninvalid="this.setCustomValidity('This status update appears to be blank. Please write something.')" onchange="this.setCustomValidity('')" type="text" ></textarea >
                 <div class="new-post-modal-form-submission">
                   <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
                   <input class="btn btn-primary" type="submit" value="Publish"></input>
@@ -28,8 +29,8 @@
               </form>
             </div>
             <div id="new-post-modal-link" class="tab-pane fade">
-              <form method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= active_link.unpublished ? 'unpublished' : 'published' %>">
-                <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.."></textarea>
+              <form id="newPostForm" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= active_link.unpublished ? 'unpublished' : 'published' %>">
+                <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
                 <input name="link" style="width:100%; padding-right:10px;" placeholder="Link.."></input>
                 <div class="new-post-modal-form-submission">
                   <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
@@ -38,8 +39,8 @@
               </form>
             </div>
             <div id="new-post-modal-photo" class="tab-pane fade">
-              <form method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= active_link.unpublished ? 'unpublished' : 'published' %>">
-                <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.."></textarea>
+              <form id="newPostForm" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= active_link.unpublished ? 'unpublished' : 'published' %>">
+                <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
                 <div class="new-post-modal-form-submission">
                   <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
                   <input class="btn btn-primary" type="submit" value="Publish"></input>
