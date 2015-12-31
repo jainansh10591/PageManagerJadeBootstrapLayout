@@ -4,6 +4,7 @@ var Facebook = require('facebook-node-sdk');
 var Step = require('step');
 var url = require('url');
 var querystring = require('querystring');
+var fs = require('fs');
 
 var requestedScope = ['manage_pages','publish_pages', 'ads_management', 'read_insights'];
 
@@ -340,10 +341,33 @@ router.post('/page/:id/post/published', Facebook.loginRequired({scope: requested
       return;
     }
 
-    var api_url = '/'+req.params.id+'/feed?'+querystring.stringify(req.body);
+    var data = {access_token: result.access_token};
 
-    req.facebook.api(api_url,'POST', {access_token: result.access_token} ,function(err, result) {
+    var api_url = '';
+    switch (req.body.type) {
+      case "status":
+          
+      case "link":
+          api_url = '/'+req.params.id+'/feed?'+querystring.stringify(req.body);
+          break;
+      case "photo":
+          if(req.body.url){
+            api_url = '/'+req.params.id+'/photos?'+querystring.stringify(req.body);
+          }
+          else{
+            api_url = '/'+req.params.id+'/photos';
+            data.source = '@'+req.files.source.path;
+          }
+          break;  
+      case "video":
+          api_url = '/'+req.params.id+'/video';
+          break;
+    }
+
+    req.facebook.api(api_url,'POST', data ,function(err, result) {
       if(err){
+        console.log("---oops--");
+        console.log(err);
         res.render('pages/error');
         return;
       }

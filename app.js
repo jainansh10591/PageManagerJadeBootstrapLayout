@@ -14,7 +14,7 @@ var api = require('./routes/api');
 
 var app = express();
 
-app.use(multer({ dest: './public/img/portfolio/'}))
+app.use(multer({ dest: './public/img/'}))
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -36,7 +36,7 @@ app.use(session({
 }));
 
 // connect Fb
-app.use(Facebook.middleware({ appId: '485782364935495', secret: '2021d1bb0d505d417e88fd4f82a7f58d'}));
+app.use(Facebook.middleware({ appId: '485782364935495', secret: '2021d1bb0d505d417e88fd4f82a7f58d', fileUpload: true}));
 
 // Connect-Flash
 app.use(flash());
@@ -94,7 +94,7 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.render('error', {
+  res.render('pages/error', {
     message: err.message,
     error: {}
   });
