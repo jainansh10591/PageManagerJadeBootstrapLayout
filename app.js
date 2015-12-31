@@ -14,7 +14,7 @@ var api = require('./routes/api');
 
 var app = express();
 
-app.use(multer({ dest: './public/img/'}))
+app.use(multer({ dest: './public/uploads/'}))
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -358,7 +358,8 @@ router.post('/page/:id/post/published', Facebook.loginRequired({scope: requested
           api_url = '/'+req.params.id+'/photos';
           break;  
       case "video":
-          api_url = '/'+req.params.id+'/video';
+          api_url = '/'+req.params.id+'/videos';
+          if(req.files.source) data.source = '@'+req.files.source.path;
           break;
     }
 
@@ -371,9 +372,7 @@ router.post('/page/:id/post/published', Facebook.loginRequired({scope: requested
     });    
   });
 
-
 });
-
 
 
 module.exports = router;
