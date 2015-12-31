@@ -341,6 +341,7 @@ router.post('/page/:id/post/published', Facebook.loginRequired({scope: requested
     }
 
     var api_url = '/'+req.params.id+'/feed?'+querystring.stringify(req.body);
+
     req.facebook.api(api_url,'POST', {access_token: result.access_token} ,function(err, result) {
       if(err){
         res.render('pages/error');
