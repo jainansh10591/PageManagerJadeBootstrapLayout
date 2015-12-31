@@ -199,3 +199,8 @@ body{
     color: #FFF;
     background-color: #337AB7
 }
+
+.new-post-modal-form-submission{
+    text-align: right;
+    padding-top: 10px;
+}

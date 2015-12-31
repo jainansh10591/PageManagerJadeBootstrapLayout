@@ -3,6 +3,7 @@ var router = express.Router();
 var Facebook = require('facebook-node-sdk');
 var Step = require('step');
 var url = require('url');
+var querystring = require('querystring');
 
 var requestedScope = ['manage_pages','publish_pages', 'ads_management', 'read_insights'];
 
@@ -131,6 +132,33 @@ var postsSelection = {
   "unpublished": "Unpublished Posts"
 }; 
 
+exports.getPagePosts = function(req, res, category){
+
+    var data = exports.defaultData();
+
+    data.page_post_heading = category;
+    if(category == postsSelection.published){
+      data.active_link.published = true;
+    }
+    else if(category == postsSelection.unpublished){
+      data.active_link.unpublished = true;
+    }
+    else{
+      data.active_link.all = true;
+    }
+
+    data.params.id= req.params.id;
+    data.base_url = '/page/'+req.params.id;
+    var query = req._parsedUrl.query;
+    var feed_url = '/'+data.params.id+'/feed';
+    if(query!=null){
+      feed_url = feed_url+'?'+query;
+    }
+    data.params.feed_url = feed_url;
+
+    data.params.page_info_url = '/'+req.params.id +'?fields=name,id,about,category,access_token';
+    exports.getPageDetails(req, res, data);
+};
 
 exports.getPageDetails = function(req, res, data) {
     req.facebook.api(data.params.page_info_url,'GET', function(err, result){
@@ -225,33 +253,6 @@ exports.getIds = function(data){
   data.reachs_id = ids;
 };
 
-exports.getPagePosts = function(req, res, category){
-
-    var data = exports.defaultData();
-
-    data.page_post_heading = category;
-    if(category == postsSelection.published){
-      data.active_link.published = true;
-    }
-    else if(category == postsSelection.unpublished){
-      data.active_link.unpublished = true;
-    }
-    else{
-      data.active_link.all = true;
-    }
-
-    data.params.id= req.params.id;
-    data.base_url = '/page/'+req.params.id;
-    var query = req._parsedUrl.query;
-    var feed_url = '/'+data.params.id+'/feed';
-    if(query!=null){
-      feed_url = feed_url+'?'+query;
-    }
-    data.params.feed_url = feed_url;
-
-    data.params.page_info_url = '/'+req.params.id +'?fields=name,id,about,category';
-    exports.getPageDetails(req, res, data);
-};
 
 exports.defaultData = function(){
   var data = {
@@ -326,6 +327,30 @@ router.get('/page/:id/unpublished_post', Facebook.loginRequired({scope: requeste
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end('Hello, ' + JSON.stringify(user) + '!');
   });
+});
+
+
+
+// ********************** Post Calls
+router.post('/page/:id/post/published', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
+
+  req.facebook.api('/'+req.params.id +'?fields=name,id,about,category,access_token','GET', function(err, result){
+    if(err){
+      res.render('pages/error');
+      return;
+    }
+
+    var api_url = '/'+req.params.id+'/feed?'+querystring.stringify(req.body);
+    req.facebook.api(api_url,'POST', {access_token: result.access_token} ,function(err, result) {
+      if(err){
+        res.render('pages/error');
+        return;
+      }
+      res.render('pages/welcome');
+    });    
+  });
+
+
 });
 
 

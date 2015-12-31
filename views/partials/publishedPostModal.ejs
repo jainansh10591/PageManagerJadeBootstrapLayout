@@ -1,6 +1,6 @@
 <!-- Modal -->
 <div id="newPostForm" class="new-post-modal modal fade" role="dialog">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog ">
 
     <!-- Modal content-->
     <div class="new-post-modal-content modal-content">
@@ -19,8 +19,14 @@
 
           <div class="tab-content">
             <div id="new-post-modal-status" class="tab-pane fade in active">
-              <h3>HOME</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <form method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= active_link.unpublished ? 'unpublished' : 'published' %>">
+                <input name="InfroText" value="1" type="hidden">
+                <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.."></textarea>
+                <div class="new-post-modal-form-submission">
+                  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                  <input class="btn btn-primary" type="submit" value="Publish"></input>
+                </div>
+              </form>
             </div>
             <div id="new-post-modal-link" class="tab-pane fade">
               <h3>Menu 2</h3>
@@ -35,23 +41,6 @@
               <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
             </div>
           </div>
-
-        <!--
-          <form id="InfroText" method="POST">
-            <input name="InfroText" value="1" type="hidden">
-            <table>
-              <tbody>
-                <tr><td>Title</td><td><input name="title" id="title" style="width:300px" type="text"><span class="hide help-inline">This is required</span></td></tr>
-                <tr><td>Introudction</td><td><textarea name="contect" style="width:300px;height:100px"></textarea></td></tr>
-              </tbody>
-            </table>
-          </form>
-        -->
-      </div>
-      
-      <div class="new-post-modal-footer modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-        <button class="btn btn-primary" data-dismiss="modal" id="InfroTextSubmit">Publish</button>
       </div>
     </div>
 
