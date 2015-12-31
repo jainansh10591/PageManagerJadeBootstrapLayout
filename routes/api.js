@@ -333,7 +333,7 @@ router.get('/page/:id/unpublished_post', Facebook.loginRequired({scope: requeste
 
 
 // ********************** Post Calls
-router.post('/page/:id/post/published', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
+router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
 
   req.facebook.api('/'+req.params.id +'?fields=name,id,about,category,access_token','GET', function(err, result){
     if(err){
@@ -343,6 +343,7 @@ router.post('/page/:id/post/published', Facebook.loginRequired({scope: requested
 
     var data = {access_token: result.access_token};
     var api_url = '';
+    var redirect_uri = "/page/"+req.params.id+'/'+req.params.type;
 
     switch (req.body.type) {
       case "status":
@@ -368,7 +369,7 @@ router.post('/page/:id/post/published', Facebook.loginRequired({scope: requested
         res.render('pages/error');
         return;
       }
-      res.render('pages/welcome');
+      res.redirect(redirect_uri);
     });    
   });
 
