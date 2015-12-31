@@ -353,12 +353,8 @@ router.post('/page/:id/post/published', Facebook.loginRequired({scope: requested
           break;
       case "photo":
           if(req.body.message) data.message = req.body.message;
-          if(req.body.url){
-            data.url = req.body.url;
-          } 
-          else{
-            data.source = '@'+req.files.source.path;
-          }
+          if(req.body.url) data.url = req.body.url;
+          if(req.files.source) data.source = '@'+req.files.source.path;
           api_url = '/'+req.params.id+'/photos';
           break;  
       case "video":

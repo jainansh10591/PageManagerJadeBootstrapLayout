@@ -18,77 +18,10 @@
           </ul>
 
           <div class="tab-content">
-            <div id="new-post-modal-status" class="tab-pane fade in active">
-              <form id="newPostForm" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= active_link.unpublished ? 'unpublished' : 'published' %>">
-                <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." required 
-                oninvalid="this.setCustomValidity('This status update appears to be blank. Please write something.')" onchange="this.setCustomValidity('')" type="text" ></textarea >
-                <input type="hidden" name="type" value="status"></input>
-                <div class="new-post-modal-form-submission">
-                  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                  <input class="btn btn-primary" type="submit" value="Publish"></input>
-                </div>
-              </form>
-            </div>
-            <div id="new-post-modal-link" class="tab-pane fade">
-              <form id="newPostForm" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= active_link.unpublished ? 'unpublished' : 'published' %>">
-                <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
-                <input name="link" style="width:100%; padding-right:10px;" placeholder="Link.."></input>
-                <input type="hidden" name="type" value="link"></input>
-                <div class="new-post-modal-form-submission">
-                  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                  <input class="btn btn-primary" type="submit" value="Publish"></input>
-                </div>
-              </form>
-            </div>
-            <div id="new-post-modal-photo" class="tab-pane fade">
-              <form id="newPostForm" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= active_link.unpublished ? 'unpublished' : 'published' %>">
-                <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
-                <ul class="nav nav-tabs new-post-modal-nav">
-                  <li class="active"><a data-toggle="tab" href="#photo-link">Link</a></li>
-                  <li><a data-toggle="tab" href="#photo-upload">Upload</a></li>
-                </ul>
-                <div class="tab-content">
-                  <div id="photo-link" class="tab-pane fade in active">
-                    <input type="text" name="url" placeholder="Enter url of the photo.."></input>
-                    <div class="new-post-modal-form-submission">
-                      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                      <input class="btn btn-primary" type="submit" value="Publish"></input>
-                    </div>
-                  </div>
-                  <div id="photo-upload" class="tab-pane fade">
-                    <input name="source" type="file" accept="image/*" ></input>
-                    <div class="new-post-modal-form-submission">
-                      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                      <input class="btn btn-primary" type="submit" value="Publish"></input>
-                    </div>
-                  </div>
-                </div>
-                <input type="hidden" name="type" value="photo"></input>
-              </form>
-            </div>
-            <div id="new-post-modal-video" class="tab-pane fade">
-              <form id="newPostForm" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= active_link.unpublished ? 'unpublished' : 'published' %>">
-                <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
-                <ul class="nav nav-tabs new-post-modal-nav">
-                  <li class="active"><a data-toggle="tab" href="#photo-link">Link</a></li>
-                  <li><a data-toggle="tab" href="#photo-upload">Upload</a></li>
-                </ul>
-                <div class="tab-content">
-                  <div id="photo-link" class="tab-pane fade in active">
-                    <input type="text" name="url" placeholder="Enter url of the photo.."></input>
-                    <input type="hidden" name="type" value="photo_link"></input>
-                  </div>
-                  <div id="photo-upload" class="tab-pane fade">
-                    <input name="" type="file" accept="video/*" ></input>
-                    <input type="hidden" name="type" value="photo_upload"></input>
-                  </div>
-                </div>
-                <div class="new-post-modal-form-submission">
-                  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                  <input class="btn btn-primary" type="submit" value="Publish"></input>
-                </div>
-              </form>
-            </div>
+            <% include published/statusForm %>
+            <% include published/linkForm %>
+            <% include published/photoForm %>
+            <% include published/videoForm %>
           </div>
       </div>
     </div>
