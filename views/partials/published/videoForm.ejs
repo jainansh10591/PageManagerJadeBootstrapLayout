@@ -1,5 +1,5 @@
 <div id="new-post-modal-video" class="tab-pane fade">
-  <form id="newPostForm" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= active_link.unpublished ? 'unpublished' : 'published' %>">
+  <form id="newPostForm" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= posts_type %>">
     <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
     <ul class="nav nav-tabs new-post-modal-nav">
       <li class="active"><a data-toggle="tab" href="#video-link">Link</a></li>

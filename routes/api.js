@@ -109,22 +109,8 @@ exports.checkNextPaginationPage = function(req, res, data){
 
 
 // Get all post of a page
-router.get('/page/:id', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
-    exports.getPagePosts(req, res, postsSelection.all);
-});
-
-router.get('/page/:id/all', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
-    exports.getPagePosts(req, res, postsSelection.all);
-});
-
-// get all published post
-router.get('/page/:id/published', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
-    exports.getPagePosts(req, res, postsSelection.published);
-});
-
-// get all unpublished posts
-router.get('/page/:id/unpublished', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
-    exports.getPagePosts(req, res, postsSelection.unpublished);
+router.get('/page/:id/posts/:type', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
+    exports.getPagePosts(req, res);
 });
 
 var postsSelection = {
@@ -133,9 +119,11 @@ var postsSelection = {
   "unpublished": "Unpublished Posts"
 }; 
 
-exports.getPagePosts = function(req, res, category){
+exports.getPagePosts = function(req, res){
 
     var data = exports.defaultData();
+    data.posts_type = req.params.type;
+    var category = postsSelection[req.params.type];
 
     data.page_post_heading = category;
     if(category == postsSelection.published){
@@ -268,6 +256,7 @@ exports.defaultData = function(){
         "published": null,
         "unpublished": null
       },
+      "posts_type": null,
       "page_post_heading": null,
       "base_url": null,
       "params": {
@@ -275,25 +264,6 @@ exports.defaultData = function(){
     };
   return data;
 };
-
-//
-router.get('/page/:id/fb', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
-  data = {};
-  data.message = "new hello";
-  data.access_token = "CAACEdEose0cBAKluzk7QZAvF9ErHzEc6Dc7hmcfZBBY1WCd1R1WS5wDQVrldA6AzxafTLDJWrKCIihhAziO8N71i176LTVzD8DQKlZA4mJJu5ZAQrWocKI3UGcHt8TP6HjCxxihZCOdqdpb3EikSBaVsna4ogsx3YwQAwOvLNsFMnJFqlFJZADUVFZCfS2uhr4ZD";
-  console.log(data);
-  req.facebook.api('/'+req.params.id+'/feed', 'POST', data , function(err, user) {
-  	if(err){
-  		res.writeHead(200, {'Content-Type': 'text/plain'});
-    	res.end('Hello, ' + JSON.stringify(err) +'!');
-  	}
-    else{
-    	res.writeHead(200, {'Content-Type': 'text/plain'});
-    	res.end('Hello, ' + JSON.stringify(user) +'!');
-	}
-  });
-});
-
 
 router.get('/page/:id/view', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
   req.facebook.api('/me', function(err, user) {
@@ -343,7 +313,7 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScop
 
     var data = {access_token: result.access_token};
     var api_url = '';
-    var redirect_uri = "/page/"+req.params.id+'/'+req.params.type;
+    var redirect_uri = "/page/"+req.params.id+'/posts/'+req.params.type;
 
     switch (req.body.type) {
       case "status":

@@ -24,9 +24,9 @@
 			<% if(posts!=null && posts.data!=null && posts.data.length != 0){ %>
 					<div class="span3 white page-side-bar">
 						<ul class="nav nav-pills nav-stacked">
-						  <li role="presentation" class="<%= active_link.all ? 'active' : '' %>"><a href="<%= base_url %>/all">All</a></li>
-						  <li role="presentation" class="<%= active_link.published ? 'active' : '' %>"><a href="<%= base_url %>/published">Published</a></li>
-						  <li role="presentation" class="<%= active_link.unpublished ? 'active' : '' %>"><a href="<%= base_url %>/unpublished">Unpublished</a></li>
+						  <li role="presentation" class="<%= active_link.all ? 'active' : '' %>"><a href="<%= base_url %>/posts/all">All</a></li>
+						  <li role="presentation" class="<%= active_link.published ? 'active' : '' %>"><a href="<%= base_url %>/posts/published">Published</a></li>
+						  <li role="presentation" class="<%= active_link.unpublished ? 'active' : '' %>"><a href="<%= base_url %>/posts/unpublished">Unpublished</a></li>
 						</ul>
 					</div>
 					<div class="span9">

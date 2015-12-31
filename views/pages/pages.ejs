@@ -28,9 +28,9 @@
 					</div>
 					<% for(var i=0; i < pages.data.length; i++) { %>
 						<div class="page-table-content page-row row-fluid seperator">
-					    	<div class="span6 page-table-data"><a href='/page/<%= pages.data[i].id %>'> <%= pages.data[i].name %> </a></div>
+					    	<div class="span6 page-table-data"><a href='/page/<%= pages.data[i].id %>/posts/all'> <%= pages.data[i].name %> </a></div>
 					    	<div class="span3 page-table-data"><a href='/page/<%= pages.data[i].id %>/view'>View</a></div>
-					    	<div class="span3 page-table-data"><a href='/page/<%= pages.data[i].id %>'>Manage</a></div>
+					    	<div class="span3 page-table-data"><a href='/page/<%= pages.data[i].id %>/posts/all'>Manage</a></div>
 						</div>
 					<% } %>
 				</div>
