@@ -50,16 +50,20 @@
                 <div class="tab-content">
                   <div id="photo-link" class="tab-pane fade in active">
                     <input type="text" name="url" placeholder="Enter url of the photo.."></input>
+                    <div class="new-post-modal-form-submission">
+                      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                      <input class="btn btn-primary" type="submit" value="Publish"></input>
+                    </div>
                   </div>
                   <div id="photo-upload" class="tab-pane fade">
                     <input name="source" type="file" accept="image/*" ></input>
+                    <div class="new-post-modal-form-submission">
+                      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                      <input class="btn btn-primary" type="submit" value="Publish"></input>
+                    </div>
                   </div>
                 </div>
                 <input type="hidden" name="type" value="photo"></input>
-                <div class="new-post-modal-form-submission">
-                  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                  <input class="btn btn-primary" type="submit" value="Publish"></input>
-                </div>
               </form>
             </div>
             <div id="new-post-modal-video" class="tab-pane fade">

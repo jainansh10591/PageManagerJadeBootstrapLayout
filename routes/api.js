@@ -342,22 +342,24 @@ router.post('/page/:id/post/published', Facebook.loginRequired({scope: requested
     }
 
     var data = {access_token: result.access_token};
-
     var api_url = '';
+
     switch (req.body.type) {
       case "status":
-          
       case "link":
-          api_url = '/'+req.params.id+'/feed?'+querystring.stringify(req.body);
+          if(req.body.message) data.message = req.body.message;
+          if(req.body.link) data.link = req.body.link;
+          api_url = '/'+req.params.id+'/feed';
           break;
       case "photo":
+          if(req.body.message) data.message = req.body.message;
           if(req.body.url){
-            api_url = '/'+req.params.id+'/photos?'+querystring.stringify(req.body);
-          }
+            data.url = req.body.url;
+          } 
           else{
-            api_url = '/'+req.params.id+'/photos';
             data.source = '@'+req.files.source.path;
           }
+          api_url = '/'+req.params.id+'/photos';
           break;  
       case "video":
           api_url = '/'+req.params.id+'/video';
@@ -366,8 +368,6 @@ router.post('/page/:id/post/published', Facebook.loginRequired({scope: requested
 
     req.facebook.api(api_url,'POST', data ,function(err, result) {
       if(err){
-        console.log("---oops--");
-        console.log(err);
         res.render('pages/error');
         return;
       }
