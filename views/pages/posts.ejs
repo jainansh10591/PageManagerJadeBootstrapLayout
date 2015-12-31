@@ -5,8 +5,10 @@
 </head>
 
 <body>
-
+	<% include ../function/functions %> 
+	<% include ../partials/loader %>
 	<div class="header">
+		<script src="/javascripts/moment.min.js"></script>
 		<% include ../partials/loggedInHeader %>
 	</div>
 
@@ -62,7 +64,7 @@
 								<div class="page-table-content post-row row-fluid seperator">
 							    	<div class="span6 page-table-data"><a href='/post/<%= posts.data[i].id %>'> <%= posts.data[i].message %> </a></div>
 							    	<div class="span2 page-table-data"> <%= reachs[posts.data[i].id].data[0].values[0].value %> </div>
-							    	<div class="span4 page-table-data"><%= posts.data[i].created_time %></div>
+							    	<div class="span4 page-table-data"><%= formatDate(posts.data[i].created_time) %></div>
 								</div>
 							<% } %>
 						</div>
