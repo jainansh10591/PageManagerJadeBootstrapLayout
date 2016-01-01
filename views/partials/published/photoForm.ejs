@@ -1,19 +1,26 @@
 <div id="new-post-modal-photo" class="tab-pane fade">
-  <form id="newPostForm" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= posts_type %>">
-    <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
     <ul class="nav nav-tabs new-post-modal-nav">
       <li class="active"><a data-toggle="tab" href="#photo-link">Link</a></li>
       <li><a data-toggle="tab" href="#photo-upload">Upload</a></li>
     </ul>
     <div class="tab-content">
       <div id="photo-link" class="tab-pane fade in active">
-        <input type="text" name="url" placeholder="Enter url of the photo.."></input>
+        <form id="newPostForm" onsubmit="formSubmission(this, event);" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= posts_type %>">
+          <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
+          <input type="text" name="url" placeholder="Enter url of the photo.." style="width:100% " required 
+          oninvalid="this.setCustomValidity('This link appears to be blank. Please provide url.')" onchange="this.setCustomValidity('')"></input>
+          <input type="hidden" name="type" value="photo"></input>
+          <% include formSubmit %>
+        </form>
       </div>
       <div id="photo-upload" class="tab-pane fade">
-        <input name="source" type="file" accept="image/*" ></input>
+        <form id="newPostForm" onsubmit="formSubmission(this, event);" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= posts_type %>">
+          <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
+          <input name="source" type="file" accept="image/*" required 
+          oninvalid="this.setCustomValidity('This image appears to be blank. Please upload image')" onchange="this.setCustomValidity('')"></input>
+          <input type="hidden" name="type" value="photo"></input>
+          <% include formSubmit %>
+        </form>
       </div>
     </div>
-    <input type="hidden" name="type" value="photo"></input>
-    <% include formSubmit %>
-  </form>
 </div>

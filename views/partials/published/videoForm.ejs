@@ -1,19 +1,28 @@
 <div id="new-post-modal-video" class="tab-pane fade">
-  <form id="newPostForm" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= posts_type %>">
-    <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
+
     <ul class="nav nav-tabs new-post-modal-nav">
       <li class="active"><a data-toggle="tab" href="#video-link">Link</a></li>
       <li><a data-toggle="tab" href="#video-upload">Upload</a></li>
     </ul>
     <div class="tab-content">
       <div id="video-link" class="tab-pane fade in active">
-        <input type="text" name="url" placeholder="Enter url of the video.."></input>
+        <form id="newPostForm" onsubmit="formSubmission(this, event);" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= posts_type %>">
+          <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
+          <input type="text" name="url" placeholder="Enter url of the video.." required 
+          oninvalid="this.setCustomValidity('This url appears to be blank. Please write url.')" onchange="this.setCustomValidity('')"></input>
+          <input type="hidden" name="type" value="video"></input>
+          <% include formSubmit %>
+        </form>
       </div>
       <div id="video-upload" class="tab-pane fade">
-        <input name="source" type="file" accept="video/*" ></input>
+        <form id="newPostForm" onsubmit="formSubmission(this, event);" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= posts_type %>">
+          <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
+          <input name="source" type="file" accept="video/*" required 
+          oninvalid="this.setCustomValidity('This video appears to be blank. Please upload video.')" onchange="this.setCustomValidity('')" ></input>
+          <input type="hidden" name="type" value="video"></input>
+          <% include formSubmit %>
+        </form>
       </div>
     </div>
-    <input type="hidden" name="type" value="video"></input>
-    <% include formSubmit %>
-  </form>
+
 </div>
