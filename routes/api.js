@@ -327,6 +327,7 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScop
           if(req.body.description) data.description = req.body.description;
           if(req.body.caption) data.caption = req.body.caption;
           if(req.body.picture) data.picture = req.body.picture;
+          // error here
           if(req.files && req.files.thumbnail) data.thumbnail = '@'+req.files.thumbnail.path;
           api_url = '/'+req.params.id+'/feed';
           break;
@@ -342,8 +343,12 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScop
           break;
     }
 
+    console.log("---data--");
+    console.log(data);
     req.facebook.api(api_url,'POST', data ,function(err, result) {
       if(err){
+        console.log("--error--");
+        console.log(err);
         res.render('pages/error');
         return;
       }

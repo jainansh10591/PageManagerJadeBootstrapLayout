@@ -3,16 +3,29 @@
     <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
     <input name="link" style="width:100%; padding-right:10px;" placeholder="Please provide Link.." required oninvalid="this.setCustomValidity('Link appears to be blank. Please provide url.')" onchange="this.setCustomValidity('')"></input>
     <input type="hidden" name="type" value="link"></input>
+    <div class="line-break"> Optional :</div>
+    <input type="text" name="name" placeholder="Enter name .." style="width:100% "></input>
+    <input type="text" name="description" placeholder="Enter description .." style="width:100% "></input>
+    <input type="text" name="caption" placeholder="Enter caption .." style="width:100% "></input>
+    <input type="checkbox" name="call-to-action" value="true">Call to action<br>
+    <div class="call-to-action" >
+    	 <select size="3" id="call-to-action-select">
+		  <option value="volvo">Volvo</option>
+		  <option value="saab">Saab</option>
+		  <option value="mercedes">Mercedes</option>
+		  <option value="audi">Audi</option>
+		</select> 
+    </div>
     <ul class="nav nav-tabs new-post-modal-nav">
-      <li class="active"><a data-toggle="tab" href="#link-photo-link">Photo Link</a></li>
-      <li><a data-toggle="tab" href="#link-photo-upload">Photo Upload</a></li>
+      <li class="active"><a data-toggle="tab" href="#link-published-photo-link">Photo Link</a></li>
+      <li><a data-toggle="tab" href="#link-published-photo-upload">Photo Upload</a></li>
     </ul>
     <div class="tab-content">
-      <div id="link-photo-link" class="tab-pane fade in active">
-          <input type="text" name="url" placeholder="Enter url of the photo (Optional).." style="width:100% "></input>
+      <div id="link-published-photo-link" class="tab-pane fade in active">
+          <input type="text" name="picture" placeholder="Enter link of the photo .." style="width:100% "></input>
       </div>
-      <div id="link-photo-upload" class="tab-pane fade">
-          <input name="source" type="file" accept="image/*"></input>
+      <div id="link-published-photo-upload" class="tab-pane fade">
+          <input name="thumbnail" type="file" accept="image/*"></input>
       </div>
     </div>
     <% include formSubmit %>

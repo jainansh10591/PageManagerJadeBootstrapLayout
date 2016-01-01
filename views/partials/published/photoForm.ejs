@@ -1,10 +1,10 @@
 <div id="new-published-post-modal-photo" class="tab-pane fade">
     <ul class="nav nav-tabs new-post-modal-nav">
-      <li class="active"><a data-toggle="tab" href="#photo-link">Link</a></li>
-      <li><a data-toggle="tab" href="#photo-upload">Upload</a></li>
+      <li class="active"><a data-toggle="tab" href="#published-photo-link">Link</a></li>
+      <li><a data-toggle="tab" href="#published-photo-upload">Upload</a></li>
     </ul>
     <div class="tab-content">
-      <div id="photo-link" class="tab-pane fade in active">
+      <div id="published-photo-link" class="tab-pane fade in active">
         <form id="newPostForm" onsubmit="formSubmission(this, event);" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/published">
           <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
           <input type="text" name="url" placeholder="Enter url of the photo.." style="width:100% " required 
@@ -13,7 +13,7 @@
           <% include formSubmit %>
         </form>
       </div>
-      <div id="photo-upload" class="tab-pane fade">
+      <div id="published-photo-upload" class="tab-pane fade">
         <form id="newPostForm" onsubmit="formSubmission(this, event);" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/published">
           <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
           <input name="source" type="file" accept="image/*" required 

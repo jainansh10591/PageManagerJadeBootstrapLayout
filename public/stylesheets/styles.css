@@ -255,3 +255,29 @@ li.logout a:focus{
   word-break: break-all;
   word-wrap: break-word;
 }
+
+.line-break{
+    margin: 15px 0px 15px 0px;
+    padding: 5px 1px 5px 0px;
+    border-top: 1px solid #DDD;
+    border-bottom: 1px solid #DDD;
+    background-color: #F6F7F8;
+}
+
+#newPostForm input {
+    margin-top: 7px;
+    min-height: 20px;
+
+}
+
+.new-post-modal-header{
+    background-color: #F6F7F8;
+}
+
+.call-to-action{
+    display: none;
+}
+
+#newPostForm input[type=checkbox]:checked ~ div.call-to-action {
+    display:block;
+}
