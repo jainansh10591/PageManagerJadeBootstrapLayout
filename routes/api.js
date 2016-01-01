@@ -329,6 +329,17 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScop
           if(req.body.picture) data.picture = req.body.picture;
           // error here
           if(req.files && req.files.thumbnail) data.thumbnail = '@'+req.files.thumbnail.path;
+
+          //check for call_to_action in published
+          if(req.params.type == "unpublished"){
+            if(req.body.callToAction) {
+              data.call_to_action = {
+                "type": req.body.callToActionSelect,
+                "value": req.body.link
+              };
+            }
+          }
+          
           api_url = '/'+req.params.id+'/feed';
           break;
       case "photo":

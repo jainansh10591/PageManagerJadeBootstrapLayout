@@ -8,7 +8,7 @@
       <div id="unpublished-video-link" class="tab-pane fade in active">
         <form id="newPostForm" onsubmit="formSubmission(this, event);" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/unpublished">
           <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
-          <input type="text" name="url" placeholder="Enter url of the video.." required 
+          <input type="text" name="url" style="width:100%" placeholder="Enter url of the video.." required 
           oninvalid="this.setCustomValidity('This url appears to be blank. Please write url.')" onchange="this.setCustomValidity('')"></input>
           <input type="hidden" name="type" value="video"></input>
           <% include formSubmit %>

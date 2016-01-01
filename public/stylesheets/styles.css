@@ -265,7 +265,7 @@ li.logout a:focus{
 }
 
 #newPostForm input {
-    margin-top: 7px;
+    margin-bottom: 7px;
     min-height: 20px;
 
 }
@@ -280,4 +280,8 @@ li.logout a:focus{
 
 #newPostForm input[type=checkbox]:checked ~ div.call-to-action {
     display:block;
+}
+
+#newPostForm .call-to-action{
+    margin-bottom: 7px;
 }
