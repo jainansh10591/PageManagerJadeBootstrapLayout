@@ -40,15 +40,21 @@
 												<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-plus"></span> Create
 												<span class="caret"></span></button>
 												<ul class="dropdown-menu">
-													<li><a class="newPostButton" data-toggle="modal" data-target="#newPublishedPostModal">Published Post</a></li>
-													<li><a href="#">Unpublished Post</a></li>
+													<li><a class="newPostButton" data-post-type="published" data-toggle="modal" data-target="#newPublishedPostModal">Published Post</a></li>
+													<li><a class="newPostButton" data-post-type="unpublished" data-toggle="modal" data-target="#newUnpublishedPostModal">Unpublished Post</a></li>
 												</ul>
 											</div>
-									    <% }else{ %>
+											<% include ../partials/publishedPostModal %>
+											<% include ../partials/unpublishedPostModal %>
+										<% } if(active_link.published){ %>
 									    	<!-- Trigger the modal with a button -->
 											<button type="button" class="btn btn-primary newPostButton" data-post-type="published" data-toggle="modal" data-target="#newPublishedPostModal"><span class="glyphicon glyphicon-plus"></span> Create</button>
+											<% include ../partials/publishedPostModal %>
+									    <% } if(active_link.unpublished){ %>
+									    	<!-- Trigger the modal with a button -->
+											<button type="button" class="btn btn-primary newPostButton" data-post-type="unpublished" data-toggle="modal" data-target="#newUnpublishedPostModal"><span class="glyphicon glyphicon-plus"></span> Create</button>
+											<% include ../partials/unpublishedPostModal %>
 									    <% }%>
-									    <% include ../partials/publishedPostModal %>
 									</div>
 								</div>
 							</div>

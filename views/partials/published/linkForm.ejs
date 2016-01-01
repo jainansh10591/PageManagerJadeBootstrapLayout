@@ -1,4 +1,4 @@
-<div id="new-post-modal-link" class="tab-pane fade">
+<div id="new-published-post-modal-link" class="tab-pane fade">
   <form id="newPostForm" onsubmit="formSubmission(this, event);" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= posts_type %>">
     <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
     <input name="link" style="width:100%; padding-right:10px;" placeholder="Link.." required oninvalid="this.setCustomValidity('Link appears to be blank. Please provide url.')" onchange="this.setCustomValidity('')"></input>
