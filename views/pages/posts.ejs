@@ -5,7 +5,6 @@
 </head>
 
 <body>
-	<% include ../function/functions %> 
 	<% include ../partials/loader %>
 	<div class="header">
 		<script src="/javascripts/moment.min.js"></script>
@@ -40,13 +39,13 @@
 												<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-plus"></span> Create
 												<span class="caret"></span></button>
 												<ul class="dropdown-menu">
-													<li><a data-toggle="modal" data-target="#newPostModal">Published Post</a></li>
+													<li><a class="newPostButton" data-toggle="modal" data-target="#newPublishedPostModal">Published Post</a></li>
 													<li><a href="#">Unpublished Post</a></li>
 												</ul>
 											</div>
 									    <% }else{ %>
 									    	<!-- Trigger the modal with a button -->
-											<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newPostModal"><span class="glyphicon glyphicon-plus"></span> Create</button>
+											<button type="button" class="btn btn-primary newPostButton" data-post-type="published" data-toggle="modal" data-target="#newPublishedPostModal"><span class="glyphicon glyphicon-plus"></span> Create</button>
 									    <% }%>
 									    <% include ../partials/publishedPostModal %>
 									</div>
