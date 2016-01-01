@@ -214,3 +214,34 @@ body{
     z-index: 9999;
     background: url('../img/loading.gif') 50% 50% no-repeat rgb(249,249,249);
 }
+
+.navbar-inverse{
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAqCAMAAABFoMFOAAAAWlBMVEVOaaJDYJxCX5xBXptIZJ9MZ6E/XJpFYZ1KZqA9W5lGYp5HY55MaKFJZZ9LZqBEYZ1NaaJNaKJNaKFAXZtAXZpLZ6E+XJo+W5lJZaA9Wpk8Wpk8Wpg8WZg7WZj2xcGWAAAANElEQVR42lWGSQoAIBDDHCjo0f8/UxBxQDQuFwlpqgBZBq6+P+unVY1GnDgwqbD2zGz5e1lBdwvGGPE6OgAAAABJRU5ErkJggg==");
+    background-repeat: repeat-x;
+    background-size: auto auto;
+    background-position: 0px 0px;
+    background-color: #3A5795;
+    border-width: 0px 0px 1px;
+    border-style: none none solid;
+    border-color: -moz-use-text-color -moz-use-text-color #133783;
+    -moz-border-top-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    border-image: none;
+    box-shadow: 0px 2px 2px -2px rgba(0, 0, 0, 0.52);
+}
+
+.navbar-inner{
+    padding: 10px;
+    color: white;
+}
+
+.navbar-inner a{
+    color: white;
+}
+
+.fixed-header-heading{
+    font-size: 20px;
+    padding-left: 10px;
+}
