@@ -10,6 +10,7 @@
           <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
           <input type="text" name="url" style="width:100%" placeholder="Enter url of the video.." required 
           oninvalid="this.setCustomValidity('This url appears to be blank. Please write url.')" onchange="this.setCustomValidity('')"></input>
+          <input type="text" name="name" style="width:100%" placeholder="Enter video name (Optional)"></input>
           <input type="hidden" name="type" value="video"></input>
           <% include formSubmit %>
         </form>
@@ -19,6 +20,7 @@
           <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
           <input name="source" type="file" accept="video/*" required 
           oninvalid="this.setCustomValidity('This video appears to be blank. Please upload video.')" onchange="this.setCustomValidity('')" ></input>
+          <input type="text" name="name" style="width:100%" placeholder="Enter video name (Optional)"></input>
           <input type="hidden" name="type" value="video"></input>
           <% include formSubmit %>
         </form>
