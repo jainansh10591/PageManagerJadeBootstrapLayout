@@ -314,12 +314,20 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScop
     var data = {access_token: result.access_token};
     var api_url = '';
     var redirect_uri = "/page/"+req.params.id+'/posts/'+req.params.type;
+    if(req.params.type == "unpublished"){
+      data.published = 0;
+    }
 
     switch (req.body.type) {
       case "status":
       case "link":
           if(req.body.message) data.message = req.body.message;
           if(req.body.link) data.link = req.body.link;
+          if(req.body.name) data.name = req.body.name;
+          if(req.body.description) data.description = req.body.description;
+          if(req.body.caption) data.caption = req.body.caption;
+          if(req.body.picture) data.picture = req.body.picture;
+          if(req.files && req.files.thumbnail) data.thumbnail = '@'+req.files.thumbnail.path;
           api_url = '/'+req.params.id+'/feed';
           break;
       case "photo":

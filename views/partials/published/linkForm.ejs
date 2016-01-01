@@ -1,8 +1,20 @@
 <div id="new-published-post-modal-link" class="tab-pane fade">
-  <form id="newPostForm" onsubmit="formSubmission(this, event);" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= posts_type %>">
+  <form id="newPostForm" onsubmit="formSubmission(this, event);" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/published">
     <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
-    <input name="link" style="width:100%; padding-right:10px;" placeholder="Link.." required oninvalid="this.setCustomValidity('Link appears to be blank. Please provide url.')" onchange="this.setCustomValidity('')"></input>
+    <input name="link" style="width:100%; padding-right:10px;" placeholder="Please provide Link.." required oninvalid="this.setCustomValidity('Link appears to be blank. Please provide url.')" onchange="this.setCustomValidity('')"></input>
     <input type="hidden" name="type" value="link"></input>
+    <ul class="nav nav-tabs new-post-modal-nav">
+      <li class="active"><a data-toggle="tab" href="#link-photo-link">Photo Link</a></li>
+      <li><a data-toggle="tab" href="#link-photo-upload">Photo Upload</a></li>
+    </ul>
+    <div class="tab-content">
+      <div id="link-photo-link" class="tab-pane fade in active">
+          <input type="text" name="url" placeholder="Enter url of the photo (Optional).." style="width:100% "></input>
+      </div>
+      <div id="link-photo-upload" class="tab-pane fade">
+          <input name="source" type="file" accept="image/*"></input>
+      </div>
+    </div>
     <% include formSubmit %>
   </form>
 </div>

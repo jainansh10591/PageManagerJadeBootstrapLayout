@@ -1,5 +1,5 @@
 <div id="new-unpublished-post-modal-status" class="tab-pane fade in active">
-  <form id="newPostForm" onsubmit="formSubmission(this, event);" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= posts_type %>">
+  <form id="newPostForm" onsubmit="formSubmission(this, event);" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/unpublished">
     <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." required 
     oninvalid="this.setCustomValidity('This status update appears to be blank. Please write something.')" onchange="this.setCustomValidity('')" type="text" ></textarea >
     <input type="hidden" name="type" value="status"></input>

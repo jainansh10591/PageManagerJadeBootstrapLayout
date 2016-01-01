@@ -12,6 +12,11 @@ FB.api(
   }
 );
 
+
+
+# api to get unpublished page post
+/page_id/promotable_posts?fields=id,message,created_time&is_published=false
+
 # api to get all posts of page
 FB.api(
   '/page_id/feed',
