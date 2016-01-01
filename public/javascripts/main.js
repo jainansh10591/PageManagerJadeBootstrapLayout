@@ -13,6 +13,21 @@ function formSubmission(element, event){
 		if(!isUrlValid(link.value.trim())){
 			valid = false;
 		}
+		var picture = element.elements["picture"];
+		if(picture && picture.value.trim()!=""){
+			if(!isUrlValid(picture.value.trim())){
+				valid = false;
+			}
+			if(!validateFileExtension(picture.value.trim(), [".jpg", ".jpeg", ".gif", ".png"])){
+				valid = false;
+			}
+		}
+		var thumbnail = element.elements["thumbnail"];
+		if(thumbnail && thumbnail.value.trim()!=""){
+			if(!validateFileExtension(thumbnail.value.trim(), [".jpg", ".jpeg", ".gif", ".png"])){
+				valid = false;
+			}
+		}
 	}
 	else if(formType == "photo" || formType == "video" ){
 		var source = element.elements["source"];
