@@ -4,9 +4,6 @@
     <input name="link" style="width:100%; padding-right:10px;" placeholder="Please provide Link.." required oninvalid="this.setCustomValidity('Link appears to be blank. Please provide url.')" onchange="this.setCustomValidity('')"></input>
     <input type="hidden" name="type" value="link"></input>
     <div class="line-break"> Optional :</div>
-    <input type="text" name="name" placeholder="Enter name .." style="width:100% "></input>
-    <input type="text" name="description" placeholder="Enter description .." style="width:100% "></input>
-    <input type="text" name="caption" placeholder="Enter caption .." style="width:100% "></input>
     <ul class="nav nav-tabs new-post-modal-nav">
       <li class="active"><a data-toggle="tab" href="#link-published-photo-link">Photo Link</a></li>
       <li><a data-toggle="tab" href="#link-published-photo-upload">Photo Upload</a></li>
@@ -19,6 +16,9 @@
           <input name="thumbnail" type="file" accept="image/*"></input>
       </div>
     </div>
+    <input type="text" name="name" placeholder="Enter name .." style="width:100% "></input>
+    <input type="text" name="description" placeholder="Enter description .." style="width:100% "></input>
+    <input type="text" name="caption" placeholder="Enter caption .." style="width:100% "></input>
     <% include formSubmit %>
   </form>
 </div>
