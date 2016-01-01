@@ -62,7 +62,7 @@
 							</div>
 							<% for(var i=0; i < posts.data.length; i++) { %>
 								<div class="page-table-content post-row row-fluid seperator">
-							    	<div class="span6 page-table-data"><a href='/post/<%= posts.data[i].id %>'> <%= posts.data[i].message %> </a></div>
+							    	<div class="span6 page-table-data truncate"><a href='/post/<%= posts.data[i].id %>'> <%= posts.data[i].message %> </a></div>
 							    	<div class="span2 page-table-data"> <%= reachs[posts.data[i].id].data[0].values[0].value %> </div>
 							    	<div class="span4 page-table-data"><%= formatDate(posts.data[i].created_time) %></div>
 								</div>
