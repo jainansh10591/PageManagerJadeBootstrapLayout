@@ -119,54 +119,30 @@ var postsSelection = {
   "unpublished": "Unpublished Posts"
 }; 
 
-// exports.getPagePosts = function(req, res){
-
-//     var data = exports.defaultData();
-//     data.posts_type = req.params.type;
-//     var category = postsSelection[req.params.type];
-
-//     data.page_post_heading = category;
-//     if(category == postsSelection.published){
-//       data.active_link.published = true;
-//     }
-//     else if(category == postsSelection.unpublished){
-//       data.active_link.unpublished = true;
-//     }
-//     else{
-//       data.active_link.all = true;
-//     }
-
-//     data.params.id= req.params.id;
-//     data.base_url = '/page/'+req.params.id;
-//     var query = req._parsedUrl.query;
-//     var feed_url = '/'+data.params.id+'/feed';
-//     if(query!=null){
-//       console.log("--try--");
-//       console.log(query);
-//       //console.log(JSON.parse(query));
-//       feed_url = feed_url+'?'+query;
-//     }
-
-//     data.params.feed_url = feed_url;
-
-//     data.params.page_info_url = '/'+req.params.id +'?fields=name,id,about,category,access_token';
-//     exports.getPageDetails(req, res, data);
-// };
-
 exports.getPagePosts = function(req, res){
 
     var data = exports.defaultData();
     data.posts_type = req.params.type;
 
     var query = req._parsedUrl.query;
-    var feed_url = '/'+req.params.id+'/promotable_posts';
+    var feed_url = '/'+req.params.id;
+    var category = postsSelection[req.params.type];
+    if(category == postsSelection.published){
+      feed_url = feed_url + "/feed";
+    }
+    else if(category == postsSelection.unpublished){
+      feed_url = feed_url + "/promotable_posts";
+    }
+    else{
+      feed_url = feed_url + "/promotable_posts";
+    }
+
     if(query!=null){
       feed_url = feed_url+'?'+query;
     }else{
       feed_url = feed_url+'?fields=message,created_time,id,call_to_action';
     }
 
-    var category = postsSelection[req.params.type];
     data.page_post_heading = category;
     if(category == postsSelection.published){
       data.active_link.published = true;
@@ -185,9 +161,6 @@ exports.getPagePosts = function(req, res){
     data.base_url = '/page/'+req.params.id;
 
     data.params.feed_url = feed_url;
-
-    console.log("--try--");
-    console.log(feed_url);
 
     data.params.page_info_url = '/'+req.params.id +'?fields=name,id,about,category,access_token';
     exports.getPageDetails(req, res, data);
