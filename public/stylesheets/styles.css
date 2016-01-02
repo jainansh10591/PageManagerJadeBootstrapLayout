@@ -344,3 +344,9 @@ li.logout a:focus{
     height:auto;
     padding-top: 10px;
 }
+.page-details-container{
+    vertical-align: middle;
+}
+.page-image{
+    width: 100%;
+}

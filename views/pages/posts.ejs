@@ -15,9 +15,15 @@
 
 	<div class="container">
 	    <div class="row-fluid">
-	        <div class="span12 heading white">
-	        	<h1><%= page_details.name %></h1>
-	        	<h4><%= page_details.about%></h4>
+	        <div class="span12 heading white page-details-container">
+	        	<div class="span1">
+	        		<img class="page-image" src="<%= page_details.full_picture ? page_details.full_picture : '/img/default.png' %>"></img>
+	        	</div>
+	        	<div class="span11">
+					<div style="font-size:24px;"><%= page_details.name %></div>
+		        	<div style="font-size:18px;"><%= page_details.about%></div>
+	        	</div>
+	        	
 	        </div>
 	    </div>
 	    <div class="row-fluid">  
