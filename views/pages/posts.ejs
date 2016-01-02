@@ -68,7 +68,7 @@
 							</div>
 							<% for(var i=0; i < posts.data.length; i++) { %>
 								<div class="page-table-content post-row row-fluid seperator">
-							    	<a data-toggle="modal" data-target="#viewPostModal" data-id="<%= i %>" href='/post/<%= posts.data[i].id %>'> 
+							    	<a data-toggle="modal" data-target="#viewPostModal" data-id="<%= i %>" onclick="viewPostModal(this, event);"> 
 					    				<div class="span6 page-table-data truncate"> <%= posts.data[i].message ? posts.data[i].message : '..'%></div>
 						    			<div class="span2 page-table-data"> <%= reachs[posts.data[i].id].data[0].values[0].value %> </div>
 						    			<div class="span4 page-table-data"><%= formatDate(posts.data[i].created_time) %></div>
@@ -85,6 +85,14 @@
 
 		<% include ../partials/footer %>
 		<script src="/javascripts/posts.js"></script>
+		<script >
+			// function viewPostModal(element, event){
+			// 	var index = $(element).data('id');
+			// 	var posts = <%- JSON.stringify(posts.data) %>;
+			// 	var currentPost = posts[index];
+			// 	var temp;
+			// }
+		</script>
 	</div>
 </body>
 </html>
