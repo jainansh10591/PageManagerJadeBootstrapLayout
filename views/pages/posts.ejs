@@ -30,9 +30,8 @@
 			<% if(posts!=null && posts.data!=null && posts.data.length != 0){ %>
 					<div class="span3 white page-side-bar">
 						<ul class="nav nav-pills nav-stacked">
-						  <li role="presentation" class="<%= active_link.all ? 'active' : '' %>"><a href="<%= base_url %>/posts/all">All</a></li>
-						  <li role="presentation" class="<%= active_link.published ? 'active' : '' %>"><a href="<%= base_url %>/posts/published">Published</a></li>
-						  <li role="presentation" class="<%= active_link.unpublished ? 'active' : '' %>"><a href="<%= base_url %>/posts/unpublished">Unpublished</a></li>
+						  <li role="presentation" class="<%= active_link.published ? 'active' : '' %>"><a href="<%= base_url %>/posts/published">Published Posts</a></li>
+						  <li role="presentation" class="<%= active_link.unpublished ? 'active' : '' %>"><a href="<%= base_url %>/posts/unpublished">Unpublished Posts</a></li>
 						</ul>
 					</div>
 					<div class="span9">
@@ -41,18 +40,7 @@
 								<div class="span6"> <h4><%= page_post_heading %></h4> </div>
 								<div class="span6">
 									<div class="pull-right">
-									  	<% if(active_link.all){ %>
-									    	<div class="dropdown">
-												<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-plus"></span> Create
-												<span class="caret"></span></button>
-												<ul class="dropdown-menu">
-													<li><a class="newPostButton" data-post-type="published" data-toggle="modal" data-target="#newPublishedPostModal">Published Post</a></li>
-													<li><a class="newPostButton" data-post-type="unpublished" data-toggle="modal" data-target="#newUnpublishedPostModal">Unpublished Post</a></li>
-												</ul>
-											</div>
-											<% include ../partials/publishedPostModal %>
-											<% include ../partials/unpublishedPostModal %>
-										<% } if(active_link.published){ %>
+										<% if(active_link.published){ %>
 									    	<!-- Trigger the modal with a button -->
 											<button type="button" class="btn btn-primary newPostButton" data-post-type="published" data-toggle="modal" data-target="#newPublishedPostModal"><span class="glyphicon glyphicon-plus"></span> Create</button>
 											<% include ../partials/publishedPostModal %>

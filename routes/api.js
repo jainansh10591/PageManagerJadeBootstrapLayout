@@ -114,7 +114,6 @@ router.get('/page/:id/posts/:type', Facebook.loginRequired({scope: requestedScop
 });
 
 var postsSelection = {
-  "all": "All Posts",
   "published": "Published Posts",
   "unpublished": "Unpublished Posts"
 }; 
@@ -131,9 +130,6 @@ exports.getPagePosts = function(req, res){
       feed_url = feed_url + "/feed";
     }
     else if(category == postsSelection.unpublished){
-      feed_url = feed_url + "/promotable_posts";
-    }
-    else{
       feed_url = feed_url + "/promotable_posts";
     }
 
@@ -165,10 +161,6 @@ exports.getPagePosts = function(req, res){
       data.active_link.unpublished = true;
       feed_url = feed_url + "&is_published=false";
     }
-    else{
-      data.active_link.all = true;
-    }
-
 
     data.params.id= req.params.id;
     data.base_url = '/page/'+req.params.id;
@@ -282,7 +274,6 @@ exports.defaultData = function(){
       "prev": null,
       "next": null,
       "active_link": {
-        "all": null,
         "published": null,
         "unpublished": null
       },
