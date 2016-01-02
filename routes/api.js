@@ -355,10 +355,7 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScop
           if(req.files && req.files.source) data.source = '@'+req.files.source.path;
           break;
     }
-
-    console.log("--data--");
-    console.log(data);
-
+    
     req.facebook.api(api_url,'POST', data ,function(err, result) {
       if(err){
         console.log("--error--");

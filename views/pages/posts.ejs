@@ -6,7 +6,6 @@
 
 <body>
 	<% include ../function/functions %>
-	<% include ../partials/loader %>
 	<div class="header">
 		<script src="/javascripts/moment.min.js"></script>
 		<% include ../partials/loggedInHeader %>
@@ -30,11 +29,12 @@
 			<% if(posts!=null && posts.data!=null && posts.data.length != 0){ %>
 					<div class="span3 white page-side-bar">
 						<ul class="nav nav-pills nav-stacked">
-						  <li role="presentation" class="<%= active_link.published ? 'active' : '' %>"><a href="<%= base_url %>/posts/Published">Published Posts</a></li>
-						  <li role="presentation" class="<%= active_link.unpublished ? 'active' : '' %>"><a href="<%= base_url %>/posts/Unpublished">Unpublished Posts</a></li>
+						  <li role="presentation" class="<%= active_link.published ? 'active' : '' %>"><a class="post-type-selection" href="<%= base_url %>/posts/Published">Published Posts</a></li>
+						  <li role="presentation" class="<%= active_link.unpublished ? 'active' : '' %>"><a class="post-type-selection" href="<%= base_url %>/posts/Unpublished">Unpublished Posts</a></li>
 						</ul>
 					</div>
-					<div class="span9">
+					<% include ../partials/loader %>
+					<div class="span9 loaded">
 						<div class="row-fluid">
 							<div class="span12 white seperator page-post-heading">
 								<div class="span6"> <h4><%= page_post_heading %></h4> </div>
