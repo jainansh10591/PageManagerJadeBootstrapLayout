@@ -1,3 +1,4 @@
+// Posting on page
 function formSubmission(element, event){
 	//$(".loader").addClass( "loader-active" );
 	var valid = true;

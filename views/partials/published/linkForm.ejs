@@ -25,7 +25,10 @@
          <select id="call-to-action-select" name="callToActionSelect"></select> 
       </div>
       <input type="checkbox" name="scheduleLater" class="scheduleLater"> Schedule for Later:<br>
-      <div class="schedule-time" >hi</div>
+      <div class="schedule-time" >
+        <input type="text" data-field="datetime" name="datetime" placeholder="Select Date" readonly>
+        <div id="dtBox"></div>
+      </div>
     <% }%>  
     <% include formSubmit %>
   </form>

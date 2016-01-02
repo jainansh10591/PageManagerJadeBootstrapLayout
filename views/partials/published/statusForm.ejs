@@ -6,7 +6,7 @@
     <% if(active_link.unpublished){ %>
         <input type="checkbox" name="scheduleLater" class="scheduleLater">Schedule for Later:<br>
       	<div class="schedule-time" >
-      		<input type="text" data-field="datetime" readonly>
+      		<input type="text" data-field="datetime" name="datetime" readonly placeholder="select date">
  			<div id="dtBox"></div>
       	</div>
     <% }%> 

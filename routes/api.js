@@ -280,13 +280,14 @@ exports.defaultData = function(){
       "posts_type": null,
       "page_post_heading": null,
       "base_url": null,
+      "scheduled_publish_time": null,
       "params": {
       }
     };
   return data;
 };
 
-// ********************** Post Calls
+// ********************** Post Calls ***********************
 router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
 
   req.facebook.api('/'+req.params.id +'?fields=name,id,about,category,access_token','GET', function(err, result){
@@ -300,6 +301,11 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScop
     var redirect_uri = "/page/"+req.params.id+'/posts/'+req.params.type;
     if(req.params.type == "Unpublished"){
       data.published = 0;
+      if(req.body.scheduleLater){
+        console.log("--date--");
+        console.log(req.body.datetime);
+        //if(req.body.datetime) data.scheduled_publish_time = datetime;
+      }
     }
 
     switch (req.body.type) {
