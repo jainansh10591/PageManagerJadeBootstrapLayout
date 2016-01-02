@@ -20,10 +20,12 @@
     <input type="text" name="description" placeholder="Enter description .." style="width:100% "></input>
     <input type="text" name="caption" placeholder="Enter caption .." style="width:100% "></input>
     <% if(active_link.unpublished){ %>
-      <input type="checkbox" name="callToAction" >Call to action<br>
+      <input type="checkbox" name="callToAction" class="callToAction"> Call to action <br>
       <div class="call-to-action" >
-         <select size="3" id="call-to-action-select" name="callToActionSelect"></select> 
+         <select id="call-to-action-select" name="callToActionSelect"></select> 
       </div>
+      <input type="checkbox" name="scheduleLater" class="scheduleLater"> Schedule for Later:<br>
+      <div class="schedule-time" >hi</div>
     <% }%>  
     <% include formSubmit %>
   </form>

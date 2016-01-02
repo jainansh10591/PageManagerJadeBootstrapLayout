@@ -77,7 +77,6 @@ function validateFileExtension(sFileName, validFileExtensions) {
             }
         }   
     }
-  
     return blnValid;
 };
 

@@ -278,9 +278,18 @@ li.logout a:focus{
     display: none;
 }
 
-#newPostForm input[type=checkbox]:checked ~ div.call-to-action {
+.schedule-time{
+    display: none;
+}
+
+#newPostForm input.callToAction[type=checkbox]:checked ~ div.call-to-action {
     display:block;
 }
+
+#newPostForm input.scheduleLater[type=checkbox]:checked ~ div.schedule-time {
+    display:block;
+}
+
 
 #newPostForm .call-to-action{
     margin-bottom: 7px;
