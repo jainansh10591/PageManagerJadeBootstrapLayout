@@ -22,15 +22,16 @@
 				<% include ../partials/filter %>
 				<div class="white page-table">
 					<div class="page-table-header row-fluid seperator">
-						<div class="span6 page-table-data page-table-header-data">Page Name</div>
-						<div class="span3 page-table-data page-table-header-data">Details</div>		
-						<div class="span3 page-table-data page-table-header-data">Manage</div>
+						<div class="span9 page-table-data">Page Name</div>
+						<div class="span3 page-table-data">Manage</div>	
 					</div>
 					<% for(var i=0; i < pages.data.length; i++) { %>
 						<div class="page-table-content page-row row-fluid seperator">
-					    	<div class="span6 page-table-data truncate"><a href='/page/<%= pages.data[i].id %>/posts/Published'> <%= pages.data[i].name %> </a></div>
-					    	<div class="span3 page-table-data"><a href='/page/<%= pages.data[i].id %>/view'>View</a></div>
-					    	<div class="span3 page-table-data"><a href='/page/<%= pages.data[i].id %>/posts/Published'>Manage</a></div>
+								<a href='/page/<%= pages.data[i].id %>/posts/Published'> 
+						    	<div class="span9 page-table-data truncate"> <%= pages.data[i].name %></div>
+						    	<div class="span3 page-table-data">Manage
+						    	</div>
+						    </a>
 						</div>
 					<% } %>
 				</div>
