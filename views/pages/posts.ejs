@@ -82,6 +82,13 @@
 				var currentPost = posts[index];
 				var pageDetails = <%- JSON.stringify(page_details) %>;
 
+				// default value
+				$('#view-post-message').html("");
+				$('#view-post-media-content').html("");
+				$('#view-image').attr('src', '/img/default.png');
+				$('#view-post-owner').html("");
+				$('#view-post-time').html("");
+
 				var message,mediaContent,publishedBy,from,creationTime,is_published,picture;
 				if(pageDetails.picture && pageDetails.picture.data && pageDetails.picture.data.url){
 					picture = pageDetails.picture.data.url;
@@ -125,7 +132,7 @@
 
 					$('#view-post-media-content').html('<img class="photo-image" src="'+videoPicture+'"></img>');
 				}
-				//loading modal	
+			
 			};
 		function formatedDate(value){
 			var date = new Date(value);

@@ -5,6 +5,8 @@ var Step = require('step');
 var url = require('url');
 var querystring = require('querystring');
 var fs = require('fs');
+var moment = require('moment');
+
 
 var requestedScope = ['manage_pages','publish_pages', 'ads_management', 'read_insights'];
 
@@ -302,9 +304,14 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScop
     if(req.params.type == "Unpublished"){
       data.published = 0;
       if(req.body.scheduleLater){
-        console.log("--date--");
-        console.log(req.body.datetime);
-        //if(req.body.datetime) data.scheduled_publish_time = datetime;
+        if(req.body.datetime){
+          var currentTimeStamp = Math.round(new Date().getTime() / 1000);
+          var scheduledTimeStamp = Math.round(new Date(req.body.datetime).getTime() / 1000);
+          var timeDifference = scheduledTimeStamp - currentTimeStamp;
+          if((timeDifference > 600) && (timeDifference < 15552000) ) {
+            data.scheduled_publish_time = scheduledTimeStamp;
+          }
+        }
       }
     }
 
