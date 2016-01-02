@@ -138,7 +138,6 @@ exports.getPagePosts = function(req, res){
     }
 
     //checking if code is present or not
-
     var valid_query = true;
     if(query!=null){
       var params = query.split(/&/);
@@ -151,7 +150,7 @@ exports.getPagePosts = function(req, res){
       }
     }
 
-    if(valid_query){
+    if(query && valid_query){
       feed_url = feed_url+'?'+query;
     }else{
       feed_url = feed_url+'?fields=message,created_time,id,call_to_action,scheduled_publish_time,application,admin_creator,caption,description,from,icon,link,name,picture,source,object_id,type,is_published';

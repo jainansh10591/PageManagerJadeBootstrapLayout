@@ -302,3 +302,11 @@ li.logout a:focus{
 .view-line{
     width: 100%;
 }
+.post-image{
+    height: 30px;
+    vertical-align: middle;
+    width: 30px;
+}
+.post-message{
+    padding-left: 2px;
+}
