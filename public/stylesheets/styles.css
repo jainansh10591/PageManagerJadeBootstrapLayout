@@ -291,3 +291,14 @@ li.logout a:focus{
     line-height: 22px;
     font-size: 16px;
 }
+.modal-label{
+    width: 30%;
+    display: block;
+}
+.modal-value{
+    width: 70%;
+    display: block;
+}
+.view-line{
+    width: 100%;
+}

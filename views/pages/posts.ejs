@@ -93,22 +93,21 @@
 				// generating html
 				var viewPostModalContent = '<div id="viewPostModalContent">';
 				
+				viewPostModalContent += '<div><div class="modal-label">Post Type: </div><div class="modal-value">'+ currentPost.type +'</div></div>';
+				if(currentPost.message) viewPostModalContent += '<div><div class="modal-label">Message: </div><div class="modal-value">'+ currentPost.message +'</div></div>';
+				if(currentPost.created_time) viewPostModalContent += '<div><div class="modal-label">Created at: </div><div class="modal-value">'+ currentPost.created_time +'</div></div>';
+				if(currentPost.call_to_action) viewPostModalContent += '<div><div class="modal-label">Call_to_Action: </div><div class="modal-value">'+ currentPost.call_to_action +'</div></div>';
+				if(currentPost.scheduled_publish_time) viewPostModalContent += '<div><div class="modal-label">scheduled_publish_time: </div><div class="modal-value">'+ currentPost.scheduled_publish_time +'</div></div>';
+				if(currentPost.caption) viewPostModalContent += '<div><div class="modal-label">caption: </div><div class="modal-value">'+ currentPost.caption +'</div></div>';
+				if(currentPost.description) viewPostModalContent += '<div><div class="modal-label">description: </div><div class="modal-value">'+ currentPost.description +'</div></div>';
+				if(currentPost.from) viewPostModalContent += '<div><div class="modal-label">from: </div><div class="modal-value">'+ currentPost.from +'</div></div>';
+				if(currentPost.icon) viewPostModalContent += '<div><div class="modal-label">icon: </div><div class="modal-value">'+ currentPost.icon +'</div></div>';
+				if(currentPost.link) viewPostModalContent += '<div><div class="modal-label">link: </div><div class="modal-value">'+ currentPost.link +'</div></div>';
+				if(currentPost.name) viewPostModalContent += '<div><div class="modal-label">name: </div><div class="modal-value">'+ currentPost.name +'</div></div>';
+				if(currentPost.picture) viewPostModalContent += '<div><div class="modal-label">picture: </div><div class="modal-value">'+ currentPost.picture +'</div></div>';
+				if(currentPost.source) viewPostModalContent += '<div><div class="modal-label">source: </div><div class="modal-value">'+ currentPost.source +'</div></div>';
+				if(currentPost.is_published) viewPostModalContent += '<div><div class="modal-label">is_published: </div><div class="modal-value">'+ currentPost.is_published +'</div></div>';
 
-				if(currentPost.type == "status"){
-					viewPostModalContent += '<div class="view-post">' + "Status1"+ '</div>';
-					viewPostModalContent += '<div class="view-post">' + "Status2"+ '</div>';
-				}else if(currentPost.type == "link"){
-					viewPostModalContent += '<div class="view-post">' + "Link1"+ '</div>';
-					viewPostModalContent += '<div class="view-post">' + "Lnk2"+ '</div>';
-
-				}else if (currentPost.type == "photo"){
-					viewPostModalContent += '<div class="view-post">' + "Ph1"+ '</div>';
-					viewPostModalContent += '<div class="view-post">' + "Ph2"+ '</div>';
-
-				}else if (currentPost.type == "video"){
-					viewPostModalContent += '<div class="view-post">' + "V1"+ '</div>';
-					viewPostModalContent += '<div class="view-post">' + "V2"+ '</div>';
-				}
 				viewPostModalContent += '</div>';
 				var container = $('#viewPostModalContent');
 				container.replaceWith(viewPostModalContent);
