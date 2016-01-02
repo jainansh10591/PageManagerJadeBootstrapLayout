@@ -137,7 +137,21 @@ exports.getPagePosts = function(req, res){
       feed_url = feed_url + "/promotable_posts";
     }
 
+    //checking if code is present or not
+
+    var valid_query = true;
     if(query!=null){
+      var params = query.split(/&/);
+      for(var i=0; i<params.length; i++){
+         var param = params[i].split(/=/);
+         if(param[0]=="code"){
+          valid_query = false;
+          break;
+         }
+      }
+    }
+
+    if(valid_query){
       feed_url = feed_url+'?'+query;
     }else{
       feed_url = feed_url+'?fields=message,created_time,id,call_to_action,scheduled_publish_time,application,admin_creator,caption,description,from,icon,link,name,picture,source,object_id,type,is_published';
