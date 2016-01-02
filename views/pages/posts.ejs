@@ -86,12 +86,33 @@
 		<% include ../partials/footer %>
 		<script src="/javascripts/posts.js"></script>
 		<script >
-			// function viewPostModal(element, event){
-			// 	var index = $(element).data('id');
-			// 	var posts = <%- JSON.stringify(posts.data) %>;
-			// 	var currentPost = posts[index];
-			// 	var temp;
-			// }
+			function viewPostModal(element, event){
+				var index = $(element).data('id');
+				var posts = <%- JSON.stringify(posts.data) %>;
+				var currentPost = posts[index];
+				// generating html
+				var viewPostModalContent = '<div id="viewPostModalContent">';
+				
+
+				if(currentPost.type == "status"){
+					viewPostModalContent += '<div class="view-post">' + "Status1"+ '</div>';
+					viewPostModalContent += '<div class="view-post">' + "Status2"+ '</div>';
+				}else if(currentPost.type == "link"){
+					viewPostModalContent += '<div class="view-post">' + "Link1"+ '</div>';
+					viewPostModalContent += '<div class="view-post">' + "Lnk2"+ '</div>';
+
+				}else if (currentPost.type == "photo"){
+					viewPostModalContent += '<div class="view-post">' + "Ph1"+ '</div>';
+					viewPostModalContent += '<div class="view-post">' + "Ph2"+ '</div>';
+
+				}else if (currentPost.type == "video"){
+					viewPostModalContent += '<div class="view-post">' + "V1"+ '</div>';
+					viewPostModalContent += '<div class="view-post">' + "V2"+ '</div>';
+				}
+				viewPostModalContent += '</div>';
+				var container = $('#viewPostModalContent');
+				container.replaceWith(viewPostModalContent);
+			}
 		</script>
 	</div>
 </body>

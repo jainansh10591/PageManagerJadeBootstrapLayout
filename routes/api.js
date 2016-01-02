@@ -338,7 +338,12 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScop
     switch (req.body.type) {
       case "status":
       case "link":
-          if(req.body.message) data.message = req.body.message;
+          if(req.body.message){
+            data.message = req.body.message;
+          }
+          else{
+            data.message = req.body.link;
+          }
           if(req.body.link) data.link = req.body.link;
           if(req.body.name) data.name = req.body.name;
           if(req.body.description) data.description = req.body.description;
@@ -360,6 +365,7 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScop
           api_url = '/'+req.params.id+'/feed';
           break;
       case "photo":
+
           if(req.body.message) data.message = req.body.message;
           if(req.body.url) data.url = req.body.url;
           if(req.files.source) data.source = '@'+req.files.source.path;

@@ -285,3 +285,9 @@ li.logout a:focus{
 #newPostForm .call-to-action{
     margin-bottom: 7px;
 }
+
+.view-post{
+    padding-top: 10px;
+    line-height: 22px;
+    font-size: 16px;
+}
