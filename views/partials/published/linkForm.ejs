@@ -1,30 +1,19 @@
 <div id="new-published-post-modal-link" class="tab-pane fade">
   <form id="newPostForm" onsubmit="formSubmission(this, event);" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= posts_type%>">
-    <input name="link" style="width:100%; padding-right:10px;" placeholder="Please provide Link.." required oninvalid="this.setCustomValidity('Link appears to be blank. Please provide.')" onchange="this.setCustomValidity('')"></input>
+    <input name="link" style="width:100%; padding-right:10px;" placeholder="Enter Link" required oninvalid="this.setCustomValidity('Link appears to be blank. Please provide.')" onchange="this.setCustomValidity('')"></input>
     <input type="hidden" name="type" value="link"></input>
     <div class="line-break"> Optional :</div>
-    <ul class="nav nav-tabs new-post-modal-nav">
-      <li class="active"><a data-toggle="tab" href="#link-published-photo-link">Photo Link</a></li>
-      <li><a data-toggle="tab" href="#link-published-photo-upload">Photo Upload</a></li>
-    </ul>
-    <div class="tab-content">
-      <div id="link-published-photo-link" class="tab-pane fade in active">
-          <input type="text" name="picture" placeholder="Enter link of the photo .." style="width:100% "></input>
-      </div>
-      <div id="link-published-photo-upload" class="tab-pane fade">
-          <input name="thumbnail" type="file" accept="image/*"></input>
-      </div>
-    </div>
+    <input type="text" name="picture" placeholder="Enter link photo url" style="width:100% "></input>
     <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
-    <input type="text" name="name" placeholder="Enter name .." style="width:100% "></input>
-    <input type="text" name="description" placeholder="Enter description .." style="width:100% "></input>
-    <input type="text" name="caption" placeholder="Enter caption .." style="width:100% "></input>
+    <input type="text" name="name" placeholder="Enter name" style="width:100% "></input>
+    <input type="text" name="description" placeholder="Enter description" style="width:100% "></input>
+    <input type="text" name="caption" placeholder="Enter caption" style="width:100% "></input>
     <% if(active_link.unpublished){ %>
       <input type="checkbox" name="callToAction" class="callToAction"> Call to action <br>
       <div class="call-to-action" >
          <select id="call-to-action-select" name="callToActionSelect"></select> 
       </div>
-      <input type="checkbox" name="scheduleLater" class="scheduleLater"> Schedule for Later:<br>
+      <input type="checkbox" name="scheduleLater" class="scheduleLater" id="scheduleLater"> Schedule for Later:
       <div class="schedule-time" >
         <input type="text" data-field="datetime" name="datetime" placeholder="Select Date" readonly>
         <div id="dtBox"></div>

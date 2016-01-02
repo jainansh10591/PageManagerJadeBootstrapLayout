@@ -7,13 +7,13 @@
     <div class="tab-content">
       <div id="published-video-link" class="tab-pane fade in active">
         <form id="newPostForm" onsubmit="formSubmission(this, event);" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= posts_type %>">
-          <input type="text" name="url" style="width:100%" placeholder="Enter url of the video.." required 
+          <input type="text" name="url" style="width:100%" placeholder="Enter url of the video" required 
           oninvalid="this.setCustomValidity('This url appears to be blank. Please write url.')" onchange="this.setCustomValidity('')"></input>
           <div class="line-break"> Optional :</div>
           <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
           <input type="hidden" name="type" value="video"></input>
           <% if(active_link.unpublished){ %>
-            <input type="checkbox" name="scheduleLater" class="scheduleLater">Schedule for Later:<br>
+            <input type="checkbox" name="scheduleLater" class="scheduleLater" id="scheduleLater">Schedule for Later:
             <div class="schedule-time" >
               <input type="text" data-field="datetime" name="datetime" placeholder="Select Date" readonly>
               <div id="dtBox"></div>
@@ -30,7 +30,7 @@
           <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
           <input type="hidden" name="type" value="video"></input>
           <% if(active_link.unpublished){ %>
-            <input type="checkbox" name="scheduleLater" class="scheduleLater">Schedule for Later:<br>
+            <input type="checkbox" name="scheduleLater" class="scheduleLater" id="scheduleLater">Schedule for Later:
             <div class="schedule-time" >
               <input type="text" data-field="datetime" name="datetime" placeholder="Select Date" readonly>
               <div id="dtBox"></div>

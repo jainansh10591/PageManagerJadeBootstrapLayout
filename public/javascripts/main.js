@@ -87,5 +87,10 @@ function isUrlValid(url) {
 
 $(window).load(function() {
 	$(".loader").removeClass( "loader-active" );
-	$("#dtBox").DateTimePicker();
+	
+	$(".scheduleLater").click(function(){
+		var temp = this;
+		var elem = temp.nextElementSibling.children[1];
+		$(elem).DateTimePicker();
+	});
 });

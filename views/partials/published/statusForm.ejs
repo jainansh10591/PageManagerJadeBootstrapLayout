@@ -4,7 +4,7 @@
     oninvalid="this.setCustomValidity('This status update appears to be blank. Please write something.')" onchange="this.setCustomValidity('')" type="text" ></textarea >
     <input type="hidden" name="type" value="status"></input>
     <% if(active_link.unpublished){ %>
-        <input type="checkbox" name="scheduleLater" class="scheduleLater">Schedule for Later:<br>
+        <input type="checkbox" name="scheduleLater" class="scheduleLater" id="scheduleLater">Schedule for Later: 
         <div class="schedule-time" >
           <input type="text" data-field="datetime" name="datetime" placeholder="Select Date" readonly>
           <div id="dtBox"></div>

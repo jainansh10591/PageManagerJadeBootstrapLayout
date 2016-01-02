@@ -329,8 +329,6 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScop
           if(req.body.description) data.description = req.body.description;
           if(req.body.caption) data.caption = req.body.caption;
           if(req.body.picture) data.picture = req.body.picture;
-          // error here
-          if(req.files && req.files.thumbnail) data.thumbnail = '@'+req.files.thumbnail.path;
 
           //check for call_to_action in published
           if(req.params.type == "Unpublished"){
@@ -347,14 +345,14 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScop
       case "photo":
           if(req.body.message) data.message = req.body.message;
           if(req.body.url) data.url = req.body.url;
-          if(req.files.source) data.source = '@'+req.files.source.path;
+          if(req.files && req.files.source) data.source = '@'+req.files.source.path;
           api_url = '/'+req.params.id+'/photos';
           break;  
       case "video":
           if(req.body.message) data.description = req.body.message;
           if(req.body.url) data.file_url = req.body.url;
           api_url = '/'+req.params.id+'/videos';
-          if(req.files.source) data.source = '@'+req.files.source.path;
+          if(req.files && req.files.source) data.source = '@'+req.files.source.path;
           break;
     }
 
