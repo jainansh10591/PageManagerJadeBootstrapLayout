@@ -345,19 +345,21 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScop
           api_url = '/'+req.params.id+'/feed';
           break;
       case "photo":
-
           if(req.body.message) data.message = req.body.message;
           if(req.body.url) data.url = req.body.url;
           if(req.files.source) data.source = '@'+req.files.source.path;
           api_url = '/'+req.params.id+'/photos';
           break;  
       case "video":
-          if(req.body.name) data.name = req.body.name;
           if(req.body.message) data.description = req.body.message;
+          if(req.body.url) data.file_url = req.body.url;
           api_url = '/'+req.params.id+'/videos';
           if(req.files.source) data.source = '@'+req.files.source.path;
           break;
     }
+
+    console.log("--data--");
+    console.log(data);
 
     req.facebook.api(api_url,'POST', data ,function(err, result) {
       if(err){
