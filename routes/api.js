@@ -119,31 +119,75 @@ var postsSelection = {
   "unpublished": "Unpublished Posts"
 }; 
 
+// exports.getPagePosts = function(req, res){
+
+//     var data = exports.defaultData();
+//     data.posts_type = req.params.type;
+//     var category = postsSelection[req.params.type];
+
+//     data.page_post_heading = category;
+//     if(category == postsSelection.published){
+//       data.active_link.published = true;
+//     }
+//     else if(category == postsSelection.unpublished){
+//       data.active_link.unpublished = true;
+//     }
+//     else{
+//       data.active_link.all = true;
+//     }
+
+//     data.params.id= req.params.id;
+//     data.base_url = '/page/'+req.params.id;
+//     var query = req._parsedUrl.query;
+//     var feed_url = '/'+data.params.id+'/feed';
+//     if(query!=null){
+//       console.log("--try--");
+//       console.log(query);
+//       //console.log(JSON.parse(query));
+//       feed_url = feed_url+'?'+query;
+//     }
+
+//     data.params.feed_url = feed_url;
+
+//     data.params.page_info_url = '/'+req.params.id +'?fields=name,id,about,category,access_token';
+//     exports.getPageDetails(req, res, data);
+// };
+
 exports.getPagePosts = function(req, res){
 
     var data = exports.defaultData();
     data.posts_type = req.params.type;
-    var category = postsSelection[req.params.type];
 
+    var query = req._parsedUrl.query;
+    var feed_url = '/'+req.params.id+'/promotable_posts';
+    if(query!=null){
+      feed_url = feed_url+'?'+query;
+    }else{
+      feed_url = feed_url+'?fields=message,created_time,id,call_to_action';
+    }
+
+    var category = postsSelection[req.params.type];
     data.page_post_heading = category;
     if(category == postsSelection.published){
       data.active_link.published = true;
+      feed_url = feed_url + "&is_published=true";
     }
     else if(category == postsSelection.unpublished){
       data.active_link.unpublished = true;
+      feed_url = feed_url + "&is_published=false";
     }
     else{
       data.active_link.all = true;
     }
 
+
     data.params.id= req.params.id;
     data.base_url = '/page/'+req.params.id;
-    var query = req._parsedUrl.query;
-    var feed_url = '/'+data.params.id+'/feed';
-    if(query!=null){
-      feed_url = feed_url+'?'+query;
-    }
+
     data.params.feed_url = feed_url;
+
+    console.log("--try--");
+    console.log(feed_url);
 
     data.params.page_info_url = '/'+req.params.id +'?fields=name,id,about,category,access_token';
     exports.getPageDetails(req, res, data);
@@ -179,7 +223,7 @@ exports.checkPreviousPagination = function(req, res, data) {
           return;
         }
         if(result!=null && result.data.length !=0){
-            data.prev = '/page/'+data.params.id+ url.parse(data.posts.paging.previous).search;
+            data.prev = '/page/'+data.params.id+'/posts/'+data.posts_type+ url.parse(data.posts.paging.previous).search;
         }
         exports.checkNextPagination(req, res, data);
       });
@@ -196,7 +240,7 @@ exports.checkNextPagination = function(req, res, data) {
           return;
         }
         if(result!=null && result.data.length !=0){
-            data.next = '/page/'+data.params.id+ url.parse(data.posts.paging.next).search;
+            data.next = '/page/'+data.params.id+'/posts/'+data.posts_type+ url.parse(data.posts.paging.next).search;
         }
         
         data.params = null;
