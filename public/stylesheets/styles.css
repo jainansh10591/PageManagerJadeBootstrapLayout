@@ -342,16 +342,32 @@ li.logout a:focus{
     width: 100%;
     padding-left: 5px;
 }
+#view-post-media-content{
+    text-decoration: none;
+    border-width: 1px;
+    border-style: solid;
+    -moz-border-top-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    border-image: none;
+    border-color: #E9EAED #E9EAED #D1D1D1;
+}
+
+
 .photo-image{
     height: auto;
     width: 100%;
     max-height: 400px;
 }
 
-.view-post-body{
+.view-post-body, .view-post-media-content{
     width:100%; 
     height:auto;
-    padding-top: 10px;
+    margin-top: 10px;
+}
+.view-post-media-content{
+    padding-left: 5px;
 }
 .page-details-container{
     vertical-align: middle;

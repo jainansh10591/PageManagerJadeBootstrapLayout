@@ -112,8 +112,8 @@
 					var linkContainer = $('<a/>',{href: link, style: "text-decoration: none;"});
 					var host = linkContainer[0].host.toUpperCase();
 					linkContainer.append('<img class="photo-image" src="'+linkPicture+'"></img>');
-					linkContainer.append('<div class="view-post-body" style="color: black;">'+ name+'</div>');
-					linkContainer.append('<div class="view-post-body" style="color: #9197A3;">'+ host+'</div>');
+					linkContainer.append('<div class="view-post-media-content" style="color: black;">'+ name+'</div>');
+					linkContainer.append('<div class="view-post-media-content" style="color: #9197A3;">'+ host+'</div>');
 
 					$('#view-post-media-content').html(linkContainer);
 				}else if (currentPost.type == "photo"){
@@ -130,7 +130,9 @@
 			var hours = date.getHours();
 			var timeSuffix = (hours > 11)? "pm" : "am";
 			hours = (hours > 11)? hours-12 : hours;
-			var dateFormat = (date.getMonth()+1)+'/'+date.getDate()+'/'+date.getFullYear()+' at '+hours+':'+date.getMinutes()+' '+timeSuffix;
+			var minutes = date.getMinutes();
+			minutes = (minutes < 10)? '0'+minutes : minutes;
+			var dateFormat = (date.getMonth()+1)+'/'+date.getDate()+'/'+date.getFullYear()+' at '+hours+':'+minutes+' '+timeSuffix;
 			return dateFormat;
 		}
 
