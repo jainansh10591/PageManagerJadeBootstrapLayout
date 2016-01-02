@@ -95,20 +95,33 @@
 				var pageDetails = <%- JSON.stringify(page_details) %>;
 
 				var message,mediaContent,publishedBy,from,creationTime,is_published,picture;
-				if(pageDetails.picture && pageDetails.picture.data && pageDetails.picture.data.url) picture = pageDetails.picture.data.url;
-				if(currentPost.from && currentPost.from.name) from = currentPost.from.name;
-				if(currentPost.application && currentPost.application.name) publishedBy = "Published by "+currentPost.application.name+' - ';
-				if(currentPost.created_time) creationTime = currentPost.created_time;
-				if(currentPost.message) message = currentPost.message;
+				if(pageDetails.picture && pageDetails.picture.data && pageDetails.picture.data.url){
+					picture = pageDetails.picture.data.url;
+					$('#view-image').attr('src', picture);
+				} 
+				if(currentPost.from && currentPost.from.name){
+					from = currentPost.from.name;
+					$('#view-post-owner').html(from);
+				} 
+				if(currentPost.application && currentPost.application.name){
+					publishedBy = "Published by "+currentPost.application.name+' on ';
+				} 
+				if(currentPost.created_time){
+					creationTime = formatedDate(currentPost.created_time);
+					if(publishedBy) creationTime = publishedBy+creationTime;
+					$('#view-post-time').html(creationTime);
+				} 
+				if(currentPost.message){
+					message = currentPost.message;
+				} 
+				//loading modal	
+			};
+		function formatedDate(value){
+			var date = new Date(value);
+			var dateFormat = (date.getMonth()+1)+'/'+date.getDate()+'/'+date.getFullYear()+' at '+date.getHours()+':'+date.getMinutes();
+			return dateFormat;
+		}
 
-				// generating html
-				var viewPostModalContent = '<div id="viewPostModalContent">';
-				
-
-				viewPostModalContent += '</div>';
-				var container = $('#viewPostModalContent');
-				container.replaceWith(viewPostModalContent);
-			}
 		</script>
 	</div>
 </body>
