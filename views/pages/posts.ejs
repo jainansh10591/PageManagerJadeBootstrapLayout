@@ -113,7 +113,26 @@
 				} 
 				if(currentPost.message){
 					message = currentPost.message;
+					$('#view-post-message').html(message);
 				} 
+
+				// dynamic content
+				if(currentPost.type == "link"){
+					var linkPicture = currentPost.full_picture ? currentPost.full_picture : "";
+					var name = currentPost.name ? currentPost.name : "";
+					var link = currentPost.link ? currentPost.link : "";
+					var linkContainer = $('<a/>',{href: link, style: "text-decoration: none;"});
+					var host = linkContainer[0].host.toUpperCase();
+					linkContainer.append('<img class="photo-image" src="'+linkPicture+'"></img>');
+					linkContainer.append('<div class="view-post-body" style="color: black;">'+ name+'</div>');
+					linkContainer.append('<div class="view-post-body" style="color: #9197A3;">'+ host+'</div>');
+
+					$('#view-post-media-content').html(linkContainer);
+				}else if (currentPost.type == "photo"){
+					$('#view-post-media-content').html('<img class="photo-image" src="'+currentPost.full_picture+'"></img>');
+				}else if (currentPost.type == "video"){
+					$('#view-post-media-content').html(message);
+				}
 				//loading modal	
 			};
 		function formatedDate(value){

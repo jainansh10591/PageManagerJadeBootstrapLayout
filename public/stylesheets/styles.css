@@ -307,7 +307,6 @@ li.logout a:focus{
     width: 100%;
 }
 #view-post-image-container{
-    background-color:#aaa;
     float:left;
     padding: 5px;
 }
@@ -317,24 +316,31 @@ li.logout a:focus{
     vertical-align: middle;
 }
 #view-post-owner{
-    background-color:#eee; 
     height:35px;
+    padding-top: 7px;
+    font-size: 16px;
+    font-weight: bold;
 }
-#view-post-time{
-    background-color:#aaa; 
+#view-post-time{ 
     height:35px;
-}
-#view-post-message{
-    background-color:#b5dcb3; 
-    width:100%; 
-    height:auto;
-}
-#view-post-media-content{
-    background-color:#b5dcb3; 
-    width:100%; 
-    height:auto;
+    padding-top: 5px;
 }
 #view-image{
     height: 60px;
     width: 60px;
+}
+#view-post-dynamic-data{
+    width: 100%;
+    padding-left: 5px;
+}
+.photo-image{
+    height: auto;
+    width: 100%;
+    max-height: 400px;
+}
+
+.view-post-body{
+    width:100%; 
+    height:auto;
+    padding-top: 10px;
 }

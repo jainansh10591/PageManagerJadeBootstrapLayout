@@ -153,7 +153,7 @@ exports.getPagePosts = function(req, res){
     if(query && valid_query){
       feed_url = feed_url+'?'+query;
     }else{
-      feed_url = feed_url+'?fields=message,created_time,id,call_to_action,scheduled_publish_time,application,admin_creator,caption,description,from,icon,link,name,picture,source,object_id,type,is_published';
+      feed_url = feed_url+'?fields=message,created_time,id,call_to_action,scheduled_publish_time,application,admin_creator,caption,description,from,icon,link,name,picture,source,object_id,type,is_published,full_picture';
     }
 
     data.page_post_heading = category;
