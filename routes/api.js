@@ -10,6 +10,7 @@ var moment = require('moment');
 
 var requestedScope = ['manage_pages','publish_pages', 'ads_management', 'read_insights'];
 
+// check user already signedin or not and navigate to index/starting page
 router.get('/', function(req, res) {
   if (!req.facebook) {
       Facebook.middleware(config)(req, res, afterNew);
@@ -18,27 +19,24 @@ router.get('/', function(req, res) {
   req.facebook.getUser(function(err, user) {
       if (err) {
         res.render('pages/error');
-      }
-      else {
+      }else {
         var data = {};
         if (user === 0) { 
           data.loggedIn = false;
-        }
-        else {
+        }else {
           data.loggedIn = true;
-          
         }
         res.render('pages/index', data);
       }
   });
 });
 
-// Login
+// Login route
 router.get('/login', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
   res.redirect('/me/pages');
 });
 
-// Logout
+// Logout route
 router.get('/logout', Facebook.logout(), function(req, res) {
 });
 
@@ -48,16 +46,9 @@ router.get('/me/pages', Facebook.loginRequired({scope: requestedScope}), functio
       "pages": null,
       "prev": null,
       "next": null,
-      "params": {
-
-      }
+      "params": {}
     };
-
-  var query = req._parsedUrl.query;
   var accounts_url = '/me/accounts';
-  if(query!=null){
-    accounts_url = accounts_url+'?'+query;
-  }
   data.params.accounts_url = accounts_url;
   exports.getOwnedPages(req, res, data);  
 });
@@ -355,7 +346,7 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScop
           if(req.files && req.files.source) data.source = '@'+req.files.source.path;
           break;
     }
-    
+
     req.facebook.api(api_url,'POST', data ,function(err, result) {
       if(err){
         console.log("--error--");
