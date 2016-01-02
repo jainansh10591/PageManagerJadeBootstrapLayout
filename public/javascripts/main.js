@@ -86,13 +86,5 @@ function isUrlValid(url) {
 
 $(window).load(function() {
 	$(".loader").removeClass( "loader-active" );
-
-	// code for dynamically loading modal
-	// $('#newPublishedPostModal').on('show.bs.modal', function(e) {
-	//     // //get data-id attribute of the clicked element
-	//      var type = $(e.relatedTarget).data('post-type');
-
-	//     // //populate the textbox
-	//      $(e.currentTarget).find('input[name="new-post-type"]').val(type);
-	// });
+	$("#dtBox").DateTimePicker();
 });
