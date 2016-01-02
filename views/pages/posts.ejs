@@ -110,10 +110,12 @@
 					var name = currentPost.name ? currentPost.name : "";
 					var link = currentPost.link ? currentPost.link : "";
 					var linkContainer = $('<a/>',{href: link, style: "text-decoration: none;"});
-					var host = linkContainer[0].host.toUpperCase();
+					var caption = currentPost.caption ? currentPost.caption : "";
+					var description = currentPost.description ? currentPost.description : "";
 					linkContainer.append('<img class="photo-image" src="'+linkPicture+'"></img>');
 					linkContainer.append('<div class="view-post-media-content" style="color: black;">'+ name+'</div>');
-					linkContainer.append('<div class="view-post-media-content" style="color: #9197A3;">'+ host+'</div>');
+					linkContainer.append('<div class="view-post-media-content" style="color: black;">'+ description+'</div>');
+					linkContainer.append('<div class="view-post-media-content" style="color: #9197A3;">'+ caption+'</div>');
 
 					$('#view-post-media-content').html(linkContainer);
 				}else if (currentPost.type == "photo"){
