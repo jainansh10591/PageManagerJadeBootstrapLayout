@@ -114,8 +114,8 @@ router.get('/page/:id/posts/:type', Facebook.loginRequired({scope: requestedScop
 });
 
 var postsSelection = {
-  "published": "Published Posts",
-  "unpublished": "Unpublished Posts"
+  "Published": "Published Posts",
+  "Unpublished": "Unpublished Posts"
 }; 
 
 exports.getPagePosts = function(req, res){
@@ -126,10 +126,10 @@ exports.getPagePosts = function(req, res){
     var query = req._parsedUrl.query;
     var feed_url = '/'+req.params.id;
     var category = postsSelection[req.params.type];
-    if(category == postsSelection.published){
+    if(category == postsSelection.Published){
       feed_url = feed_url + "/feed";
     }
-    else if(category == postsSelection.unpublished){
+    else if(category == postsSelection.Unpublished){
       feed_url = feed_url + "/promotable_posts";
     }
 
@@ -153,11 +153,11 @@ exports.getPagePosts = function(req, res){
     }
 
     data.page_post_heading = category;
-    if(category == postsSelection.published){
+    if(category == postsSelection.Published){
       data.active_link.published = true;
       feed_url = feed_url + "&is_published=true";
     }
-    else if(category == postsSelection.unpublished){
+    else if(category == postsSelection.Unpublished){
       data.active_link.unpublished = true;
       feed_url = feed_url + "&is_published=false";
     }
@@ -286,43 +286,6 @@ exports.defaultData = function(){
   return data;
 };
 
-router.get('/page/:id/view', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
-  req.facebook.api('/me', function(err, user) {
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('Hello, ' + JSON.stringify(user) + '!');
-  });
-});
-
-router.get('/page/:id/edit', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
-  req.facebook.api('/me', function(err, user) {
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('Hello, ' + JSON.stringify(user) + '!');
-  });
-});
-
-router.get('/page/:id/delete', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
-  req.facebook.api('/me', function(err, user) {
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('Hello, ' + JSON.stringify(user) + '!');
-  });
-});
-
-router.get('/page/:id/post', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
-  req.facebook.api('/me', function(err, user) {
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('Hello, ' + JSON.stringify(user) + '!');
-  });
-});
-
-router.get('/page/:id/unpublished_post', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
-  req.facebook.api('/me', function(err, user) {
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('Hello, ' + JSON.stringify(user) + '!');
-  });
-});
-
-
-
 // ********************** Post Calls
 router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
 
@@ -335,7 +298,7 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScop
     var data = {access_token: result.access_token};
     var api_url = '';
     var redirect_uri = "/page/"+req.params.id+'/posts/'+req.params.type;
-    if(req.params.type == "unpublished"){
+    if(req.params.type == "Unpublished"){
       data.published = 0;
     }
 
@@ -357,7 +320,7 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScop
           if(req.files && req.files.thumbnail) data.thumbnail = '@'+req.files.thumbnail.path;
 
           //check for call_to_action in published
-          if(req.params.type == "unpublished"){
+          if(req.params.type == "Unpublished"){
             if(req.body.callToAction) {
               data.call_to_action = {
                 "type": req.body.callToActionSelect,

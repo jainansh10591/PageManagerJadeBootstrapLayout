@@ -1,7 +1,6 @@
 <div id="new-published-post-modal-link" class="tab-pane fade">
-  <form id="newPostForm" onsubmit="formSubmission(this, event);" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/published">
-    <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
-    <input name="link" style="width:100%; padding-right:10px;" placeholder="Please provide Link.." required oninvalid="this.setCustomValidity('Link appears to be blank. Please provide url.')" onchange="this.setCustomValidity('')"></input>
+  <form id="newPostForm" onsubmit="formSubmission(this, event);" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= posts_type%>">
+    <input name="link" style="width:100%; padding-right:10px;" placeholder="Please provide Link.." required oninvalid="this.setCustomValidity('Link appears to be blank. Please provide.')" onchange="this.setCustomValidity('')"></input>
     <input type="hidden" name="type" value="link"></input>
     <div class="line-break"> Optional :</div>
     <ul class="nav nav-tabs new-post-modal-nav">
@@ -16,9 +15,16 @@
           <input name="thumbnail" type="file" accept="image/*"></input>
       </div>
     </div>
+    <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
     <input type="text" name="name" placeholder="Enter name .." style="width:100% "></input>
     <input type="text" name="description" placeholder="Enter description .." style="width:100% "></input>
     <input type="text" name="caption" placeholder="Enter caption .." style="width:100% "></input>
+    <% if(active_link.unpublished){ %>
+      <input type="checkbox" name="callToAction" >Call to action<br>
+      <div class="call-to-action" >
+         <select size="3" id="call-to-action-select" name="callToActionSelect"></select> 
+      </div>
+    <% }%>  
     <% include formSubmit %>
   </form>
 </div>

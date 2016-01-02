@@ -103,3 +103,8 @@ FB.api(
 #######################################################
 
 # comment on post - "post_id/comments" with "message" and user "access_token"
+
+
+// all needed post details
+
+1552417364837853/promotable_posts?fields=message,created_time,id,call_to_action,scheduled_publish_time,application,admin_creator,caption,description,from,icon,link,name,picture,source,object_id,type,is_published
