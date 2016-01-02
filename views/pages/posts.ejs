@@ -131,13 +131,18 @@
 				}else if (currentPost.type == "photo"){
 					$('#view-post-media-content').html('<img class="photo-image" src="'+currentPost.full_picture+'"></img>');
 				}else if (currentPost.type == "video"){
-					$('#view-post-media-content').html(message);
+					var videoPicture = currentPost.full_picture ? currentPost.full_picture : "";
+
+					$('#view-post-media-content').html('<img class="photo-image" src="'+videoPicture+'"></img>');
 				}
 				//loading modal	
 			};
 		function formatedDate(value){
 			var date = new Date(value);
-			var dateFormat = (date.getMonth()+1)+'/'+date.getDate()+'/'+date.getFullYear()+' at '+date.getHours()+':'+date.getMinutes();
+			var hours = date.getHours();
+			var timeSuffix = (hours > 11)? "pm" : "am";
+			hours = (hours > 11)? hours-12 : hours;
+			var dateFormat = (date.getMonth()+1)+'/'+date.getDate()+'/'+date.getFullYear()+' at '+hours+':'+date.getMinutes()+' '+timeSuffix;
 			return dateFormat;
 		}
 
