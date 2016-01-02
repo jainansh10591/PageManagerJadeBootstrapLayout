@@ -92,23 +92,18 @@
 				var index = $(element).data('id');
 				var posts = <%- JSON.stringify(posts.data) %>;
 				var currentPost = posts[index];
+				var pageDetails = <%- JSON.stringify(page_details) %>;
+
+				var message,mediaContent,publishedBy,from,creationTime,is_published,picture;
+				if(pageDetails.picture && pageDetails.picture.data && pageDetails.picture.data.url) picture = pageDetails.picture.data.url;
+				if(currentPost.from && currentPost.from.name) from = currentPost.from.name;
+				if(currentPost.application && currentPost.application.name) publishedBy = "Published by "+currentPost.application.name+' - ';
+				if(currentPost.created_time) creationTime = currentPost.created_time;
+				if(currentPost.message) message = currentPost.message;
+
 				// generating html
 				var viewPostModalContent = '<div id="viewPostModalContent">';
 				
-				viewPostModalContent += '<div><div class="modal-label">Post Type: </div><div class="modal-value">'+ currentPost.type +'</div></div>';
-				if(currentPost.message) viewPostModalContent += '<div><div class="modal-label">Message: </div><div class="modal-value">'+ currentPost.message +'</div></div>';
-				if(currentPost.created_time) viewPostModalContent += '<div><div class="modal-label">Created at: </div><div class="modal-value">'+ currentPost.created_time +'</div></div>';
-				if(currentPost.call_to_action) viewPostModalContent += '<div><div class="modal-label">Call_to_Action: </div><div class="modal-value">'+ currentPost.call_to_action +'</div></div>';
-				if(currentPost.scheduled_publish_time) viewPostModalContent += '<div><div class="modal-label">scheduled_publish_time: </div><div class="modal-value">'+ currentPost.scheduled_publish_time +'</div></div>';
-				if(currentPost.caption) viewPostModalContent += '<div><div class="modal-label">caption: </div><div class="modal-value">'+ currentPost.caption +'</div></div>';
-				if(currentPost.description) viewPostModalContent += '<div><div class="modal-label">description: </div><div class="modal-value">'+ currentPost.description +'</div></div>';
-				if(currentPost.from) viewPostModalContent += '<div><div class="modal-label">from: </div><div class="modal-value">'+ currentPost.from +'</div></div>';
-				if(currentPost.icon) viewPostModalContent += '<div><div class="modal-label">icon: </div><div class="modal-value">'+ currentPost.icon +'</div></div>';
-				if(currentPost.link) viewPostModalContent += '<div><div class="modal-label">link: </div><div class="modal-value">'+ currentPost.link +'</div></div>';
-				if(currentPost.name) viewPostModalContent += '<div><div class="modal-label">name: </div><div class="modal-value">'+ currentPost.name +'</div></div>';
-				if(currentPost.picture) viewPostModalContent += '<div><div class="modal-label">picture: </div><div class="modal-value">'+ currentPost.picture +'</div></div>';
-				if(currentPost.source) viewPostModalContent += '<div><div class="modal-label">source: </div><div class="modal-value">'+ currentPost.source +'</div></div>';
-				if(currentPost.is_published) viewPostModalContent += '<div><div class="modal-label">is_published: </div><div class="modal-value">'+ currentPost.is_published +'</div></div>';
 
 				viewPostModalContent += '</div>';
 				var container = $('#viewPostModalContent');

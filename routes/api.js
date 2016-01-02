@@ -175,7 +175,7 @@ exports.getPagePosts = function(req, res){
 
     data.params.feed_url = feed_url;
 
-    data.params.page_info_url = '/'+req.params.id +'?fields=name,id,about,category,access_token';
+    data.params.page_info_url = '/'+req.params.id +'?fields=name,id,about,category,access_token,picture';
     exports.getPageDetails(req, res, data);
 };
 
