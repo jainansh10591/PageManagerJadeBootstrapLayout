@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var Facebook = require('facebook-node-sdk');
-var Step = require('step');
 var url = require('url');
 var querystring = require('querystring');
 var fs = require('fs');
