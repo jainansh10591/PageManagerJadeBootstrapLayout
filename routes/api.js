@@ -69,12 +69,29 @@ router.get('/me/pages', Facebook.loginRequired({scope: variables.requestedScope}
       "next": null,
       "params": {}
     };
+
+  // handling pagination request
+  var query = req._parsedUrl.query;
+  var accounts_url = '/me/accounts';
+  var valid_query = true;
+    if(query!=null){
+      var params = query.split(/&/);
+      for(var i=0; i<params.length; i++){
+         var param = params[i].split(/=/);
+         if(param[0]=="code"){
+          valid_query = false;
+          break;
+         }
+      }
+    }
+
+  if(query && valid_query) accounts_url = accounts_url+'?'+query;
+
+  data.params.accounts_url = accounts_url;
   exports.getOwnedPages(req, res, data);  
 });
 
 exports.getOwnedPages = function(req, res, data){
-  var accounts_url = '/me/accounts';
-  data.params.accounts_url = accounts_url;
 
   req.facebook.api(data.params.accounts_url, 'GET', function(err, result){
     if(err){
@@ -345,7 +362,7 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: variables.req
 
           api_url = '/'+req.params.id+'/feed';
           break;
-          
+
       case variables.postCategory.photo:
           if(req.body.message) data.message = req.body.message;
           if(req.body.url) data.url = req.body.url;
