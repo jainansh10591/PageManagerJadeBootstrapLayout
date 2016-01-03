@@ -6,6 +6,7 @@ var url = require('url');
 var querystring = require('querystring');
 var fs = require('fs');
 var moment = require('moment');
+var flash = require('connect-flash');
 
 var variables = {
   "requestedScope": ['manage_pages','publish_pages', 'ads_management', 'read_insights'],
@@ -162,7 +163,8 @@ exports.defaultData = function(){
       "base_url": null,
       "scheduled_publish_time": null,
       "params": {
-      }
+      },
+      "errors": null
     };
   return data;
 };
@@ -285,6 +287,8 @@ exports.getReaches = function(req, res, data){
       }
       else{
         data.reachs = result;
+        // req.flash('info', ['Welcome', 'Please Enjoy']);
+        // data.message = req.flash('info');
         res.render(variables.pages.page_posts, data);
       }
     });
