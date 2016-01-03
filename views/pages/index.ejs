@@ -1,42 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<% include ../partials/head %>
-</head>
+<% layout('layout') -%>
 
-<body>
+<div class="header">
+	<% include ../partials/header %>
+</div>
 
-	<div class="header">
-		<% include ../partials/header %>
-	</div>
+<div class="container">
+    <div class="row-fluid">
+        <div id="content" class="span12>">
+        	<div class="home-hero">
+			            <h1>Welcome to Facebook Page Manager</h1>
+			            <h3>An applicatoin to manage Facebook pages</h3>
 
-
-	<div class="container">
-	    <div class="row-fluid">
-	        <div id="content" class="span12>">
-	        	<div class="home-hero">
-				            <h1>Welcome to Facebook Page Manager</h1>
-				            <h3>An applicatoin to manage Facebook pages</h3>
-
-				    <br/>
-				    <% if(!loggedIn){ %>
-					    <div style="opacity: 1;">
-					        <a href="/login"><img src="img/fblogin.png" /></a>
-					    </div>
-				    <% }else{ %>
-				    	<div class="index-button" style="opacity: 1;">
-					        <a href="/me/pages">View Managed Pages</a>
-					        <a href="/logout">Login with other account</a>
-					    </div>
-				    <% } %>
-				</div>
-	        </div>
-	    </div>
-	</div>
-
-	<footer class="footer">
-		<% include ../partials/footer %>
-	</footer>
-
-</body>
-</html>
+			    <br/>
+			    <% if(!loggedIn){ %>
+				    <div style="opacity: 1;">
+				        <a href="/login"><img src="img/fblogin.png" /></a>
+				    </div>
+			    <% }else{ %>
+			    	<div class="index-button" style="opacity: 1;">
+				        <a href="/me/pages">View Managed Pages</a>
+				        <a href="/logout">Login with other account</a>
+				    </div>
+			    <% } %>
+			</div>
+        </div>
+    </div>
+</div>

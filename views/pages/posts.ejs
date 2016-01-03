@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<% include ../partials/head %>
-</head>
+<% layout('layout') -%>
 
-<body>
 	<% include ../function/posts %>
 	<div class="header">
 		<script src="/javascripts/moment.min.js"></script>
@@ -73,7 +68,6 @@
 			<% } %>	     
 	    </div>
 
-		<% include ../partials/footer %>
 		<script src="/javascripts/posts.js"></script>
 		<script >
 			function viewPostModal(element, event){
@@ -150,5 +144,3 @@
 		};
 		</script>
 	</div>
-</body>
-</html>

@@ -8,12 +8,17 @@ var expressValidator = require('express-validator');
 var flash = require('connect-flash');
 var multer = require('multer');
 var session = require('express-session');
+var engine = require('ejs-locals');
 
 var api = require('./routes/api');
 
 var app = express();
 
 app.use(multer({ dest: './public/uploads/'}))
+
+
+// use ejs-locals for all ejs templates:
+app.engine('ejs', engine);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -42,6 +47,9 @@ app.use(flash());
 
 // Global Vars
 app.locals.moment = require('moment');
+// app.locals({
+//     _layoutFile:'layout.ejs'
+//   });
 app.use(function (req, res, next) {
   res.locals.messages = require('express-messages')(req, res);
   next();
