@@ -7,8 +7,19 @@ var querystring = require('querystring');
 var fs = require('fs');
 var moment = require('moment');
 
-
-var requestedScope = ['manage_pages','publish_pages', 'ads_management', 'read_insights'];
+var variables = {
+  "requestedScope": ['manage_pages','publish_pages', 'ads_management', 'read_insights'],
+  "pages": {
+              "error_page": 'pages/error',
+              "owned_pages": 'pages/pages',
+              "page_posts": 'pages/posts',
+              "index": 'pages/index'
+            },
+  "postsSelection": {
+                      "Published": "Published Posts",
+                      "Unpublished": "Unpublished Posts"
+                    }
+};
 
 // check user already signedin or not and navigate to index/starting page
 router.get('/', function(req, res) {
@@ -18,7 +29,7 @@ router.get('/', function(req, res) {
 
   req.facebook.getUser(function(err, user) {
       if (err) {
-        res.render('pages/error');
+        res.render(variables.pages.error_page);
       }else {
         var data = {};
         if (user === 0) { 
@@ -26,13 +37,13 @@ router.get('/', function(req, res) {
         }else {
           data.loggedIn = true;
         }
-        res.render('pages/index', data);
+        res.render(variables.pages.index, data);
       }
   });
 });
 
 // Login route
-router.get('/login', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
+router.get('/login', Facebook.loginRequired({scope: variables.requestedScope}), function(req, res) {
   res.redirect('/me/pages');
 });
 
@@ -41,7 +52,7 @@ router.get('/logout', Facebook.logout(), function(req, res) {
 });
 
 //--- Get all pages owned by loggedIn User
-router.get('/me/pages', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
+router.get('/me/pages', Facebook.loginRequired({scope: variables.requestedScope}), function(req, res) {
   var data = {
       "pages": null,
       "prev": null,
@@ -57,7 +68,7 @@ exports.getOwnedPages = function(req, res, data){
 
   req.facebook.api(data.params.accounts_url, 'GET', function(err, result){
     if(err){
-      res.render('pages/error');
+      res.render(variables.pages.error_page);
       return;
     }
     data.pages = result;
@@ -68,7 +79,7 @@ exports.checkPreviousPaginationPage = function(req, res, data){
   if(data.pages.paging!=null && data.pages.paging.previous!=null){
       req.facebook.api(data.pages.paging.previous,'GET' ,function(err, result){
         if(err){
-          res.render('pages/error');
+          res.render(variables.pages.error_page);
           return;
         }
         if(result!=null && result.data.length!=0){
@@ -85,25 +96,25 @@ exports.checkNextPaginationPage = function(req, res, data){
   if(data.pages.paging!=null && data.pages.paging.next!=null){
       req.facebook.api(data.pages.paging.next,'GET' ,function(err, result){
         if(err){
-          res.render('pages/error');
+          res.render(variables.pages.error_page);
           return;
         }
         if(result!=null && result.data.length!=0){
           data.next = data.params.accounts_url+ url.parse(data.pages.paging.next).search;
         }
         data.params = null;
-        res.render('pages/pages', data);
+        res.render(variables.pages.owned_pages, data);
       });
   }
   else{
     data.params = null;
-    res.render('pages/pages', data);
+    res.render(variables.pages.owned_pages, data);
   }
 }
 // *****************************************************************************
 
 // ----Get all posts of a page 
-router.get('/page/:id/posts/:type', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
+router.get('/page/:id/posts/:type', Facebook.loginRequired({scope: variables.requestedScope}), function(req, res) {
     exports.getPagePosts(req, res);
 });
 
@@ -129,20 +140,15 @@ exports.defaultData = function(){
   return data;
 };
 
-var postsSelection = {
-  "Published": "Published Posts",
-  "Unpublished": "Unpublished Posts"
-}; 
-
 exports.getPagePosts = function(req, res){
     var data = exports.defaultData();
 
     data.posts_type = req.params.type;
 
     var feed_url = '/'+req.params.id;
-    var category = postsSelection[req.params.type];
-    if(category == postsSelection.Published) feed_url = feed_url + "/feed";
-    if(category == postsSelection.Unpublished) feed_url = feed_url + "/promotable_posts";
+    var category = variables.postsSelection[req.params.type];
+    if(category == variables.postsSelection.Published) feed_url = feed_url + "/feed";
+    if(category == variables.postsSelection.Unpublished) feed_url = feed_url + "/promotable_posts";
 
     //checking if code is present or not
     var query = req._parsedUrl.query;
@@ -166,11 +172,11 @@ exports.getPagePosts = function(req, res){
 
     // checking getting published post or unpublished
     data.page_post_heading = category;
-    if(category == postsSelection.Published){
+    if(category == variables.postsSelection.Published){
       data.active_link.published = true;
       feed_url = feed_url + "&is_published=true";
     }
-    else if(category == postsSelection.Unpublished){
+    else if(category == variables.postsSelection.Unpublished){
       data.active_link.unpublished = true;
       feed_url = feed_url + "&is_published=false";
     }
@@ -186,7 +192,7 @@ exports.getPagePosts = function(req, res){
 exports.getPageDetails = function(req, res, data) {
     req.facebook.api(data.params.page_info_url,'GET', function(err, result){
       if(err){
-        res.render('pages/error');
+        res.render(variables.pages.error_page);
         return;
       }
       data.page_details = result;
@@ -197,7 +203,7 @@ exports.getPageDetails = function(req, res, data) {
 exports.getFeeds = function(req, res, data) {
     req.facebook.api(data.params.feed_url,'GET', function(err, result){
       if(err){
-        res.render('pages/error');
+        res.render(variables.pages.error_page);
         return;
       }
       data.posts = result;
@@ -209,7 +215,7 @@ exports.checkPreviousPagination = function(req, res, data) {
     if(data.posts.paging!=null && data.posts.paging.previous!=null){
       req.facebook.api(data.posts.paging.previous,'GET' ,function(err, result){
         if(err){
-          res.render('pages/error');
+          res.render(variables.pages.error_page);
           return;
         }
         if(result!=null && result.data.length !=0){
@@ -226,7 +232,7 @@ exports.checkNextPagination = function(req, res, data) {
     if(data.posts.paging!=null && data.posts.paging.next!=null){
       req.facebook.api(data.posts.paging.next,'GET' ,function(err, result){
         if(err){
-          res.render('pages/error');
+          res.render(variables.pages.error_page);
           return;
         }
         if(result!=null && result.data.length !=0){
@@ -247,17 +253,17 @@ exports.getReaches = function(req, res, data){
   if(data.reachs_id!=null){
     req.facebook.api('/insights/post_impressions_unique?ids='+data.reachs_id,'GET' ,function(err, result){
       if(err){
-        res.render('pages/error');
+        res.render(variables.pages.error_page);
         return;
       }
       else{
         data.reachs = result;
-        res.render('pages/posts', data);
+        res.render(variables.pages.page_posts, data);
       }
     });
   }
   else{
-    res.render('pages/posts', data);
+    res.render(variables.pages.page_posts, data);
   }
 };
 
@@ -276,11 +282,11 @@ exports.getIds = function(data){
 // ********************************************************
 
 // -- Post on the page
-router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
+router.post('/page/:id/post/:type', Facebook.loginRequired({scope: variables.requestedScope}), function(req, res) {
 
   req.facebook.api('/'+req.params.id +'?fields=name,id,about,category,access_token','GET', function(err, result){
     if(err){
-      res.render('pages/error');
+      res.render(variables.pages.error_page);
       return;
     }
 
@@ -347,7 +353,7 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScop
       if(err){
         console.log("--error--");
         console.log(err);
-        res.render('pages/error');
+        res.render(variables.pages.error_page);
         return;
       }
       res.redirect(redirect_uri);
