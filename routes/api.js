@@ -18,7 +18,17 @@ var variables = {
   "postsSelection": {
                       "Published": "Published Posts",
                       "Unpublished": "Unpublished Posts"
-                    }
+                    },
+  "postsType":  {
+                  "Unpublished": "Unpublished",
+                  "Published": "Published"
+                },
+  "postCategory": {
+                    "status": "status",
+                    "link": "link",
+                    "photo": "photo",
+                    "video": "video"
+                  }
 };
 
 // check user already signedin or not and navigate to index/starting page
@@ -295,7 +305,7 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: variables.req
     var redirect_uri = "/page/"+req.params.id+'/posts/'+req.params.type;
 
     // checking published, unpublished or scheduled
-    if(req.params.type == "Unpublished"){
+    if(req.params.type == variables.postsType.Unpublished){
       data.published = 0;
       if(req.body.scheduleLater){
         if(req.body.datetime){
@@ -310,8 +320,8 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: variables.req
     }
 
     switch (req.body.type) {
-      case "status":
-      case "link":
+      case variables.postCategory.status:
+      case variables.postCategory.link:
           if(req.body.message){
             data.message = req.body.message;
           }else{
@@ -324,7 +334,7 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: variables.req
           if(req.body.picture) data.picture = req.body.picture;
 
           //check for call_to_action in published
-          if(req.params.type == "Unpublished"){
+          if(req.params.type == variables.postsType.Unpublished){
             if(req.body.callToAction) {
               data.call_to_action = {
                 "type": req.body.callToActionSelect,
@@ -335,13 +345,15 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: variables.req
 
           api_url = '/'+req.params.id+'/feed';
           break;
-      case "photo":
+          
+      case variables.postCategory.photo:
           if(req.body.message) data.message = req.body.message;
           if(req.body.url) data.url = req.body.url;
           if(req.files && req.files.source) data.source = '@'+req.files.source.path;
           api_url = '/'+req.params.id+'/photos';
           break;  
-      case "video":
+
+      case variables.postCategory.video:
           if(req.body.message) data.description = req.body.message;
           if(req.body.url) data.file_url = req.body.url;
           api_url = '/'+req.params.id+'/videos';
