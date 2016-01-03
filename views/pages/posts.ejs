@@ -143,5 +143,11 @@
 				var dateFormat = (date.getMonth()+1)+'/'+date.getDate()+'/'+date.getFullYear()+' at '+hours+':'+minutes+' '+timeSuffix;
 				return dateFormat;
 			};
+
+			var errorMessage= "<%- error %>"; 
+			if(errorMessage != "" && errorMessage != "null"){
+				alert(errorMessage);
+			}
+
 		</script>
 	</div>

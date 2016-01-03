@@ -28,7 +28,10 @@ var variables = {
                     "link": "link",
                     "photo": "photo",
                     "video": "video"
-                  }
+                  },
+  "redirect": {
+    "posts_page_error": "/me/pages/error"
+  }
 };
 
 // check user already signedin or not and navigate to index/starting page
@@ -62,15 +65,33 @@ router.get('/logout', Facebook.logout(), function(req, res) {
 });
 
 //--- Get all pages owned by loggedIn User
-router.get('/me/pages', Facebook.loginRequired({scope: variables.requestedScope}), function(req, res) {
-  var data = {
+router.get('/me/pages/error', Facebook.loginRequired({scope: variables.requestedScope}), function(req, res) {
+    var data = {
       "pages": null,
       "prev": null,
       "next": null,
-      "params": {}
+      "params": {},
+      "error": null
     };
+    data.error = "Something went wrong. Please try again.";
+    exports.getOwnedPages(req, res, data); 
+});
 
-  // handling pagination request
+router.get('/me/pages', Facebook.loginRequired({scope: variables.requestedScope}), function(req, res) {
+    var data = {
+      "pages": null,
+      "prev": null,
+      "next": null,
+      "params": {},
+      "error": null
+    };
+    exports.getOwnedPages(req, res, data); 
+ 
+});
+
+exports.getOwnedPages = function(req, res, data){
+
+    // handling pagination request
   var query = req._parsedUrl.query;
   var accounts_url = '/me/accounts';
   var valid_query = true;
@@ -88,10 +109,6 @@ router.get('/me/pages', Facebook.loginRequired({scope: variables.requestedScope}
   if(query && valid_query) accounts_url = accounts_url+'?'+query;
 
   data.params.accounts_url = accounts_url;
-  exports.getOwnedPages(req, res, data);  
-});
-
-exports.getOwnedPages = function(req, res, data){
 
   req.facebook.api(data.params.accounts_url, 'GET', function(err, result){
     if(err){
@@ -161,7 +178,13 @@ exports.checkNextPaginationPage = function(req, res, data){
 
 // ----Get all posts of a page 
 router.get('/page/:id/posts/:type', Facebook.loginRequired({scope: variables.requestedScope}), function(req, res) {
-    exports.getPagePosts(req, res);
+    var data = exports.defaultData();
+    exports.getPagePosts(req, res, data);
+});
+router.get('/page/:id/posts/:type/error', Facebook.loginRequired({scope: variables.requestedScope}), function(req, res) {
+    var data = exports.defaultData();
+    data.error = "Something went wrong. Please try again.";
+    exports.getPagePosts(req, res, data);
 });
 
 exports.defaultData = function(){
@@ -182,13 +205,13 @@ exports.defaultData = function(){
       "scheduled_publish_time": null,
       "params": {
       },
-      "errors": null
+      "error": null
     };
   return data;
 };
 
-exports.getPagePosts = function(req, res){
-    var data = exports.defaultData();
+exports.getPagePosts = function(req, res, data){
+    
 
     data.posts_type = req.params.type;
 
@@ -239,7 +262,7 @@ exports.getPagePosts = function(req, res){
 exports.getPageDetails = function(req, res, data) {
     req.facebook.api(data.params.page_info_url,'GET', function(err, result){
       if(err){
-        res.render(variables.pages.error_page);
+        res.redirect(variables.redirect.posts_page_error);
         return;
       }
       data.page_details = result;
@@ -250,7 +273,7 @@ exports.getPageDetails = function(req, res, data) {
 exports.getFeeds = function(req, res, data) {
     req.facebook.api(data.params.feed_url,'GET', function(err, result){
       if(err){
-        res.render(variables.pages.error_page);
+        res.redirect(variables.redirect.posts_page_error);
         return;
       }
       data.posts = result;
@@ -262,7 +285,7 @@ exports.checkPreviousPagination = function(req, res, data) {
     if(data.posts.paging!=null && data.posts.paging.previous!=null){
       req.facebook.api(data.posts.paging.previous,'GET' ,function(err, result){
         if(err){
-          res.render(variables.pages.error_page);
+          res.redirect(variables.redirect.posts_page_error);
           return;
         }
         if(result!=null && result.data.length !=0){
@@ -279,7 +302,7 @@ exports.checkNextPagination = function(req, res, data) {
     if(data.posts.paging!=null && data.posts.paging.next!=null){
       req.facebook.api(data.posts.paging.next,'GET' ,function(err, result){
         if(err){
-          res.render(variables.pages.error_page);
+          res.redirect(variables.redirect.posts_page_error);
           return;
         }
         if(result!=null && result.data.length !=0){
@@ -300,13 +323,11 @@ exports.getReaches = function(req, res, data){
   if(data.reachs_id!=null){
     req.facebook.api('/insights/post_impressions_unique?ids='+data.reachs_id,'GET' ,function(err, result){
       if(err){
-        res.render(variables.pages.error_page);
+        res.redirect(variables.redirect.posts_page_error);
         return;
       }
       else{
         data.reachs = result;
-        // req.flash('info', ['Welcome', 'Please Enjoy']);
-        // data.message = req.flash('info');
         res.render(variables.pages.page_posts, data);
       }
     });
@@ -335,7 +356,7 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: variables.req
 
   req.facebook.api('/'+req.params.id +'?fields=name,id,about,category,access_token','GET', function(err, result){
     if(err){
-      res.render(variables.pages.error_page);
+      res.redirect('/page/'+req.params.id+'/posts/'+req.params.type+'/error');
       return;
     }
 
@@ -404,7 +425,7 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: variables.req
       if(err){
         console.log("--error--");
         console.log(err);
-        res.render(variables.pages.error_page);
+        res.redirect('/page/'+req.params.id+'/posts/'+req.params.type+'/error');
         return;
       }
       res.redirect(redirect_uri);
