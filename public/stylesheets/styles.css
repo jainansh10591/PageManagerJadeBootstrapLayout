@@ -109,13 +109,14 @@ legend {
 
 body{
     background-color: #E9EAED;
+    font-size: 16px;
 }
 
 .heading{    
-    padding: 15px 15px ;
+    padding: 20px 15px ;
     border-bottom: 1px solid #E5E5E5;
     font-family: helvetica,arial,sans-serif;
-    font-size: 16px;
+    font-size: 20px;
     color: #4E5665;
     margin-bottom: 12px;
 }
@@ -131,7 +132,8 @@ body{
 
 .page-table-data{
     word-wrap: break-word;
-    padding: 10px 20px;
+    padding: 20px 20px;
+    font-size: 16px;
 }
 
 .page-table-content{
@@ -140,8 +142,8 @@ body{
 
 .page-table-header-data{
     border-right-style: solid;
-    border-right-left: solid;
-    border-width: 0px 1px 0px 0px;
+    border-left-style: solid;
+    border-width: 0px 1px 0px 1px;
     border-color: #D3D3D3;
 }
 
@@ -361,4 +363,8 @@ li.logout a:focus{
 }
 .page-image{
     width: 100%;
+}
+
+.post-type-selection{
+    font-size: 16px;
 }

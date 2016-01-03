@@ -40,6 +40,9 @@
 							</div>
 						</div>
 						<% include ../partials/filter %>
+						<div class="col-xs-9 col-sm-9 col-md-9 paginationloader">
+						</div>
+						<div class="paginationloaded">
 						<div class="page-table-header  seperator" >
 							<div class="col-xs-6 col-sm-6 col-md-6 page-table-data page-table-header-data">Posts</div>
 							<div class="col-xs-2 col-sm-2 col-md-2 page-table-data page-table-header-data">Views</div>
@@ -57,6 +60,7 @@
 							</div>
 							<% include ../partials/viewPostModal %>
 						<% } %>
+						</div>
 					</div>
 			<% } else{ %>  
 			   <div class="white empty"> No Posts on this page !</div>
