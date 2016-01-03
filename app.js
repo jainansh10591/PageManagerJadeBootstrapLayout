@@ -9,6 +9,7 @@ var flash = require('connect-flash');
 var multer = require('multer');
 var session = require('express-session');
 var engine = require('ejs-locals');
+var expressBundles = require('express-bundles');
 
 var api = require('./routes/api');
 
@@ -23,6 +24,37 @@ app.engine('ejs', engine);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+// bundles
+app.use(expressBundles.middleware({
+  env: 'production',
+  src: path.join(__dirname, 'public'),
+  bundles: {
+    'stylesheets/combined.css': [
+      'stylesheets/bootstrap.min.css',
+      'stylesheets/bootstrap.min.css.map',
+      'stylesheets/DateTimePicker.css',
+      'stylesheets/bootstrap-responsive.min.css',
+      'stylesheets/bootstrap-theme.min.css',
+      'stylesheets/bootstrap-theme.min.css.map',
+      'stylesheets/styles.css'
+    ],
+    'javascripts/bundle.js': [
+      'javascripts/jquery.js',
+      'javascripts/bootstrap.min.js',
+      'javascripts/main.js',
+      'javascripts/DateTimePicker.js',
+      'javascripts/DateTimePicker-i18n.js',
+      'javascripts/moment.min.js',
+      'javascripts/jqBootstrapValidation.js'
+    ]
+  },
+  hooks: {
+    '.styl': function(file, data, done) {
+      stylus.render(data, done);
+    }
+  }
+}));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));

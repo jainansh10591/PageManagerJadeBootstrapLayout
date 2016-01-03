@@ -20,6 +20,7 @@
     "ejs": "^1.0.0",
     "debug": "*",
     "ejs-locals": "*",
-    "express-ejs-layouts": "*"
+    "express-ejs-layouts": "*",
+    "express-bundles": "*"
   }
 }

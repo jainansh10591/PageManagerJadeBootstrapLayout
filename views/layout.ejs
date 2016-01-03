@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Facebook Page Manager</title>
+	<title>Facebook Page Managers</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="Facebook Page Manager Application">
 	<meta name="author" content="Anshul Kataria">
@@ -23,7 +23,7 @@
 		<link rel="stylesheet" href="/<%= bundles.emit('stylesheets/combined.css')[i] %>" />
 	<% } %>
 	<% for(var i=0; i < bundles.emit('javascripts/bundle.js').length; i++) { %>
-		<script src="/<%= bundles.emit('javascripts/bundle.js')[i] %>"></script>
+		<script rel="stylesheet" src="/<%= bundles.emit('javascripts/bundle.js')[i] %>"></script>
 	<% } %>
 
 </head>
