@@ -1,47 +1,61 @@
 // Posting on page
+var postCategory = {
+	"status": "status",
+	"link": "link",
+	"photo": "photo",
+	"video": "video"
+};
+
+var variables = {
+	"picture": "picture",
+	"thumbnail": "thumbnail",
+	"source": "source",
+	"url": "url",
+	"type": "type"
+};
 function formSubmission(element, event){
-	//$(".loader").addClass( "loader-active" );
 	var valid = true;
-	var formType = element.elements["type"].value;
-	if(formType == "status"){
+	var formType = element.elements[variables.type].value;
+
+	if(formType == postCategory.status){
 		
 	}
-	else if(formType == "link"){
-		var link = element.elements["link"];
-		if(link.value.trim() == ""){
+	else if(formType == postCategory.link){
+		var link = element.elements[postCategory.link];
+		if(link.value.trim() == "" || !isUrlValid(link.value.trim())){
+			link.setCustomValidity('Invalid link');
 			valid = false;
 		}
-		if(!isUrlValid(link.value.trim())){
-			valid = false;
-		}
-		var picture = element.elements["picture"];
+
+		var picture = element.elements[variables.picture];
 		if(picture && picture.value.trim()!=""){
-			if(!isUrlValid(picture.value.trim())){
-				valid = false;
-			}
-			if(!validateFileExtension(picture.value.trim(), [".jpg", ".jpeg", ".gif", ".png"])){
+			if(!isUrlValid(picture.value.trim()) || !validateFileExtension(picture.value.trim(), [".jpg", ".jpeg", ".gif", ".png"]) ){
+				picture.setCustomValidity('Invalid photo link');
 				valid = false;
 			}
 		}
-		var thumbnail = element.elements["thumbnail"];
+		var thumbnail = element.elements[variables.thumbnail];
 		if(thumbnail && thumbnail.value.trim()!=""){
 			if(!validateFileExtension(thumbnail.value.trim(), [".jpg", ".jpeg", ".gif", ".png"])){
+				thumbnail.setCustomValidity('Invalid photo uploaded');
 				valid = false;
 			}
 		}
 	}
-	else if(formType == "photo" || formType == "video" ){
-		var source = element.elements["source"];
-		var url = element.elements["url"];
+	else if(formType == postCategory.photo || formType == postCategory.video ){
+		var source = element.elements[variables.source];
+		var url = element.elements[variables.url];
 		// need to validate server side extension
 		if(source){
-			if(formType == "photo"){
+			if(formType == postCategory.photo){
 				if(!validateFileExtension(source.value.trim(), [".jpg", ".jpeg", ".bmp", ".gif", ".png"])){
+					source.setCustomValidity('Invalid photo uploaded');
 					valid = false;
 				}
 			}
-			else if(formType=="video"){
+			else if(formType==postCategory.video){
 				if(!validateFileExtension(source.value.trim(), [".3g2", ".3gp", ".3gpp", ".asf", ".avi", ".dat", ".divx", ".dv", ".f4v", ".flv", ".m2ts", ".m4v", ".mkv", ".mod", ".mov", ".mp4", ".mpe", ".mpeg", ".mpeg4", ".mpg", ".mts", ".nsv", ".ogm", ".ogv", ".qt", ".tod", ".ts", ".vob", ".wmv"])){
+					source.setCustomValidity('Invalid video uploaded');
 					valid = false;
 				}
 			}
@@ -49,6 +63,7 @@ function formSubmission(element, event){
 		if(url){
 			// also check that url is of photo/video or not
 			if(!isUrlValid(url.value.trim())){
+				url.setCustomValidity('Invalid url');
 				valid = false;
 			}
 		}

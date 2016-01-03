@@ -7,9 +7,9 @@
       <div id="published-photo-link" class="tab-pane fade in active">
         <form id="newPostForm" onsubmit="formSubmission(this, event);" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= posts_type %>">
           <input type="text" name="url" placeholder="Enter url of the photo" style="width:100% " required 
-          oninvalid="this.setCustomValidity('This link appears to be blank. Please provide url.')" onchange="this.setCustomValidity('')"></input>
+          oninvalid="this.setCustomValidity('This link appears to be blank. Please provide url.')" onkeyup="this.setCustomValidity('')"></input>
           <div class="line-break"> Optional :</div>
-          <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
+          <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" onkeyup="this.setCustomValidity('')"></textarea >
           <input type="hidden" name="type" value="photo"></input>
           <% if(active_link.unpublished){ %>
             <input type="checkbox" name="scheduleLater" class="scheduleLater" id="scheduleLater">Schedule for Later:
@@ -24,9 +24,9 @@
       <div id="published-photo-upload" class="tab-pane fade">
         <form id="newPostForm" onsubmit="formSubmission(this, event);" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= posts_type %>">
           <input name="source" type="file" accept="image/*" required 
-          oninvalid="this.setCustomValidity('This image appears to be blank. Please upload image')" onchange="this.setCustomValidity('')"></input>
+          oninvalid="this.setCustomValidity('This image appears to be blank. Please upload image')" onkeyup="this.setCustomValidity('')"></input>
           <div class="line-break"> Optional :</div>
-          <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" ></textarea >
+          <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" onkeyup="this.setCustomValidity('')" ></textarea >
           <input type="hidden" name="type" value="photo"></input>
           <% if(active_link.unpublished){ %>
             <input type="checkbox" name="scheduleLater" class="scheduleLater" id="scheduleLater">Schedule for Later:
