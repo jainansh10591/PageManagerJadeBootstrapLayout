@@ -140,6 +140,7 @@ body{
 
 .page-table-header-data{
     border-right-style: solid;
+    border-right-left: solid;
     border-width: 0px 1px 0px 0px;
     border-color: #D3D3D3;
 }

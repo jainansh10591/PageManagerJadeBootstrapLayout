@@ -1,19 +1,18 @@
-<div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-12 white seperator filter">
-		<nav>
-		  <ul class="pager pull-right">
-		  	<% if(prev==null){ %>
-		    	<li class="disabled"><a>Previous</a></li>
-		    <% }else{ %>
-		    	<li><a href='<%= prev %>'>Previous</a></li>
-		    <% }%>
 
-		    <% if(next==null){ %>
-		    	<li class="disabled"><a>Next</a></li>
-		    <% }else{ %>
-		    	<li><a href='<%= next %>'>Next</a></li>
-		    <% }%>
-		  </ul>
-		</nav>
-	</div>
+<div class="col-xs-12 col-sm-12 col-md-12 white seperator filter">
+	<nav>
+	  <ul class="pager pull-right">
+	  	<% if(prev==null){ %>
+	    	<li class="disabled"><a>Previous</a></li>
+	    <% }else{ %>
+	    	<li><a href='<%= prev %>'>Previous</a></li>
+	    <% }%>
+
+	    <% if(next==null){ %>
+	    	<li class="disabled"><a>Next</a></li>
+	    <% }else{ %>
+	    	<li><a href='<%= next %>'>Next</a></li>
+	    <% }%>
+	  </ul>
+	</nav>
 </div>
