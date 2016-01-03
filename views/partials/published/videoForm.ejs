@@ -8,9 +8,9 @@
       <div id="published-video-link" class="tab-pane fade in active">
         <form id="newPostForm" onsubmit="formSubmission(this, event);" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= posts_type %>">
           <input type="text" name="url" style="width:100%" placeholder="Enter url of the video" required 
-          oninvalid="this.setCustomValidity('This url appears to be blank. Please write url.')" onkeyup="this.setCustomValidity('')"></input>
+          oninvalid="this.setCustomValidity('This url appears to be blank. Please write url.')" onkeyup="this.setCustomValidity('')" onchange="this.setCustomValidity('')"></input>
           <div class="line-break"> Optional :</div>
-          <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" onkeyup="this.setCustomValidity('')" ></textarea >
+          <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" onkeyup="this.setCustomValidity('')" onchange="this.setCustomValidity('')"></textarea >
           <input type="hidden" name="type" value="video"></input>
           <% if(active_link.unpublished){ %>
             <input type="checkbox" name="scheduleLater" class="scheduleLater" id="scheduleLater">Schedule for Later:
@@ -25,9 +25,9 @@
       <div id="published-video-upload" class="tab-pane fade">
         <form id="newPostForm" onsubmit="formSubmission(this, event);" method="POST" enctype="multipart/form-data" action="/page/<%= page_details.id %>/post/<%= posts_type %>">
           <input name="source" type="file" accept="video/*" required 
-          oninvalid="this.setCustomValidity('This video appears to be blank. Please upload video.')" onkeyup="this.setCustomValidity('')" ></input>
+          oninvalid="this.setCustomValidity('This video appears to be blank. Please upload video.')" onkeyup="this.setCustomValidity('')" onchange="this.setCustomValidity('')"></input>
           <div class="line-break"> Optional :</div>
-          <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" onkeyup="this.setCustomValidity('')"></textarea >
+          <textarea name="message" style="width:100%; min-height:140px; padding-right:10px;" placeholder="Say something.." type="text" onkeyup="this.setCustomValidity('')" onchange="this.setCustomValidity('')"></textarea >
           <input type="hidden" name="type" value="video"></input>
           <% if(active_link.unpublished){ %>
             <input type="checkbox" name="scheduleLater" class="scheduleLater" id="scheduleLater">Schedule for Later:
