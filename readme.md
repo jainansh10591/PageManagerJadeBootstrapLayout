@@ -108,3 +108,8 @@ FB.api(
 // all needed post details
 
 1552417364837853/promotable_posts?fields=message,created_time,id,call_to_action,scheduled_publish_time,application,admin_creator,caption,description,from,icon,link,name,picture,source,object_id,type,is_published
+
+// page permission required
+ADMINISTER
+CREATE_ADS
+CREATE_CONTENT

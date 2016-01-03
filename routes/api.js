@@ -98,10 +98,29 @@ exports.getOwnedPages = function(req, res, data){
       res.render(variables.pages.error_page);
       return;
     }
-    data.pages = result;
+
+    //check pages which can be managed by this application
+    var pages = [];
+    if(result.data && result.data.length != 0){
+      for(var i=0; i< result.data.length; i++){
+        if( result.data[i].perms && ( exports.containsAll(["ADMINISTER"], result.data[i].perms) || exports.containsAll( ["CREATE_CONTENT", "CREATE_ADS"], result.data[i].perms) ) ){
+          pages.push(result.data[i]);
+        }
+      }
+    }
+    data.pages = pages;
     exports.checkPreviousPaginationPage(req, res, data);
   });
 }
+
+// helper function to check array contain all element from other array
+exports.containsAll = function(needles, haystack){ 
+  for(var i = 0 , len = needles.length; i < len; i++){
+     if(haystack.indexOf(needles[i]) == -1) return false;
+  }
+  return true;
+}
+
 exports.checkPreviousPaginationPage = function(req, res, data){
   if(data.pages.paging!=null && data.pages.paging.previous!=null){
       req.facebook.api(data.pages.paging.previous,'GET' ,function(err, result){

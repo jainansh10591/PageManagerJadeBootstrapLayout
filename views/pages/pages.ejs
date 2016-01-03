@@ -18,17 +18,17 @@
 	        </div>
 	    </div>
 	    <div class="row-fluid ">  
-			<% if(pages.data!=null && pages.data.length != 0){ %>
+			<% if(pages!=null && pages.length != 0){ %>
 				<% include ../partials/filter %>
 				<div class="white page-table">
 					<div class="page-table-header row-fluid seperator">
 						<div class="span9 page-table-data">Page Name</div>
 						<div class="span3 page-table-data">Manage</div>	
 					</div>
-					<% for(var i=0; i < pages.data.length; i++) { %>
+					<% for(var i=0; i < pages.length; i++) { %>
 						<div class="page-table-content page-row row-fluid seperator">
-								<a href='/page/<%= pages.data[i].id %>/posts/Published'> 
-						    	<div class="span9 page-table-data truncate"> <%= pages.data[i].name %></div>
+								<a href='/page/<%= pages[i].id %>/posts/Published'> 
+						    	<div class="span9 page-table-data truncate"> <%= pages[i].name %></div>
 						    	<div class="span3 page-table-data">Manage
 						    	</div>
 						    </a>
