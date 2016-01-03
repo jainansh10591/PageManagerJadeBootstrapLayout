@@ -326,7 +326,7 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScop
               };
             }
           }
-          
+
           api_url = '/'+req.params.id+'/feed';
           break;
       case "photo":

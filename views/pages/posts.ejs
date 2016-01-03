@@ -82,7 +82,7 @@
 				var currentPost = posts[index];
 				var pageDetails = <%- JSON.stringify(page_details) %>;
 
-				// default value
+				// reset/clear view post modal
 				$('#view-post-message').html("");
 				$('#view-post-media-content').html("");
 				$('#view-image').attr('src', '/img/default.png');
@@ -90,6 +90,7 @@
 				$('#view-post-time').html("");
 				$('#view-post-scheduled').html("");
 
+				// Loading view post modal
 				var message,mediaContent,publishedBy,from,creationTime,is_published,picture,scheduled_publish_time;
 				if(pageDetails.picture && pageDetails.picture.data && pageDetails.picture.data.url){
 					picture = pageDetails.picture.data.url;
@@ -113,10 +114,10 @@
 				}
 				if(currentPost.scheduled_publish_time){
 					scheduled_publish_time = currentPost.scheduled_publish_time;
-					$('#view-post-scheduled').html("Scheduled for "+ unixToFormatedDate(scheduled_publish_time));
+					$('#view-post-scheduled').html("Scheduled for "+ formatedDate(scheduled_publish_time * 1000));
 				}
 				
-				// dynamic content
+				// Loading based on post type
 				if(currentPost.type == "link"){
 					var linkPicture = currentPost.full_picture ? currentPost.full_picture : "";
 					var name = currentPost.name ? currentPost.name : "";
@@ -128,13 +129,11 @@
 					linkContainer.append('<div class="view-post-media-content" style="color: black;">'+ name+'</div>');
 					linkContainer.append('<div class="view-post-media-content" style="color: black;">'+ description+'</div>');
 					linkContainer.append('<div class="view-post-media-content" style="color: #9197A3;">'+ caption+'</div>');
-
 					$('#view-post-media-content').html(linkContainer);
 				}else if (currentPost.type == "photo"){
 					$('#view-post-media-content').html('<img class="photo-image" src="'+currentPost.full_picture+'"></img>');
 				}else if (currentPost.type == "video"){
 					var videoPicture = currentPost.full_picture ? currentPost.full_picture : "";
-
 					$('#view-post-media-content').html('<img class="photo-image" src="'+videoPicture+'"></img>');
 				}
 			
@@ -148,11 +147,7 @@
 			minutes = (minutes < 10)? '0'+minutes : minutes;
 			var dateFormat = (date.getMonth()+1)+'/'+date.getDate()+'/'+date.getFullYear()+' at '+hours+':'+minutes+' '+timeSuffix;
 			return dateFormat;
-		}
-		function unixToFormatedDate(unixTime){
-			return formatedDate(unixTime*1000);
-		}
-
+		};
 		</script>
 	</div>
 </body>
