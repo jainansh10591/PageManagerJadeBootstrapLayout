@@ -88,8 +88,9 @@
 				$('#view-image').attr('src', '/img/default.png');
 				$('#view-post-owner').html("");
 				$('#view-post-time').html("");
+				$('#view-post-scheduled').html("");
 
-				var message,mediaContent,publishedBy,from,creationTime,is_published,picture;
+				var message,mediaContent,publishedBy,from,creationTime,is_published,picture,scheduled_publish_time;
 				if(pageDetails.picture && pageDetails.picture.data && pageDetails.picture.data.url){
 					picture = pageDetails.picture.data.url;
 					$('#view-image').attr('src', picture);
@@ -99,7 +100,7 @@
 					$('#view-post-owner').html(from);
 				} 
 				if(currentPost.application && currentPost.application.name){
-					publishedBy = "Published by "+currentPost.application.name+' on ';
+					publishedBy = "Created using "+currentPost.application.name+' on ';
 				} 
 				if(currentPost.created_time){
 					creationTime = formatedDate(currentPost.created_time);
@@ -109,8 +110,12 @@
 				if(currentPost.message){
 					message = currentPost.message;
 					$('#view-post-message').html(message);
-				} 
-
+				}
+				if(currentPost.scheduled_publish_time){
+					scheduled_publish_time = currentPost.scheduled_publish_time;
+					$('#view-post-scheduled').html("Scheduled for "+ unixToFormatedDate(scheduled_publish_time));
+				}
+				
 				// dynamic content
 				if(currentPost.type == "link"){
 					var linkPicture = currentPost.full_picture ? currentPost.full_picture : "";
@@ -143,6 +148,9 @@
 			minutes = (minutes < 10)? '0'+minutes : minutes;
 			var dateFormat = (date.getMonth()+1)+'/'+date.getDate()+'/'+date.getFullYear()+' at '+hours+':'+minutes+' '+timeSuffix;
 			return dateFormat;
+		}
+		function unixToFormatedDate(unixTime){
+			return formatedDate(unixTime*1000);
 		}
 
 		</script>

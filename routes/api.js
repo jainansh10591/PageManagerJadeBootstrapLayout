@@ -40,7 +40,7 @@ router.get('/login', Facebook.loginRequired({scope: requestedScope}), function(r
 router.get('/logout', Facebook.logout(), function(req, res) {
 });
 
-// Get all pages owned by loggedIn User
+//--- Get all pages owned by loggedIn User
 router.get('/me/pages', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
   var data = {
       "pages": null,
@@ -48,12 +48,13 @@ router.get('/me/pages', Facebook.loginRequired({scope: requestedScope}), functio
       "next": null,
       "params": {}
     };
-  var accounts_url = '/me/accounts';
-  data.params.accounts_url = accounts_url;
   exports.getOwnedPages(req, res, data);  
 });
 
 exports.getOwnedPages = function(req, res, data){
+  var accounts_url = '/me/accounts';
+  data.params.accounts_url = accounts_url;
+
   req.facebook.api(data.params.accounts_url, 'GET', function(err, result){
     if(err){
       res.render('pages/error');
@@ -99,12 +100,34 @@ exports.checkNextPaginationPage = function(req, res, data){
     res.render('pages/pages', data);
   }
 }
+// *****************************************************************************
 
-
-// Get all post of a page
+// ----Get all posts of a page 
 router.get('/page/:id/posts/:type', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
     exports.getPagePosts(req, res);
 });
+
+exports.defaultData = function(){
+  var data = {
+      "page_details": null,
+      "posts": null,
+      "reachs": null,
+      "reachs_id": null,
+      "prev": null,
+      "next": null,
+      "active_link": {
+        "published": null,
+        "unpublished": null
+      },
+      "posts_type": null,
+      "page_post_heading": null,
+      "base_url": null,
+      "scheduled_publish_time": null,
+      "params": {
+      }
+    };
+  return data;
+};
 
 var postsSelection = {
   "Published": "Published Posts",
@@ -112,21 +135,17 @@ var postsSelection = {
 }; 
 
 exports.getPagePosts = function(req, res){
-
     var data = exports.defaultData();
+
     data.posts_type = req.params.type;
 
-    var query = req._parsedUrl.query;
     var feed_url = '/'+req.params.id;
     var category = postsSelection[req.params.type];
-    if(category == postsSelection.Published){
-      feed_url = feed_url + "/feed";
-    }
-    else if(category == postsSelection.Unpublished){
-      feed_url = feed_url + "/promotable_posts";
-    }
+    if(category == postsSelection.Published) feed_url = feed_url + "/feed";
+    if(category == postsSelection.Unpublished) feed_url = feed_url + "/promotable_posts";
 
     //checking if code is present or not
+    var query = req._parsedUrl.query;
     var valid_query = true;
     if(query!=null){
       var params = query.split(/&/);
@@ -139,12 +158,13 @@ exports.getPagePosts = function(req, res){
       }
     }
 
-    if(query && valid_query){
+    if(query && valid_query) {
       feed_url = feed_url+'?'+query;
     }else{
       feed_url = feed_url+'?fields=message,created_time,id,call_to_action,scheduled_publish_time,application,admin_creator,caption,description,from,icon,link,name,picture,source,object_id,type,is_published,full_picture';
     }
 
+    // checking getting published post or unpublished
     data.page_post_heading = category;
     if(category == postsSelection.Published){
       data.active_link.published = true;
@@ -155,11 +175,10 @@ exports.getPagePosts = function(req, res){
       feed_url = feed_url + "&is_published=false";
     }
 
-    data.params.id= req.params.id;
+
+    data.params.id = req.params.id;
     data.base_url = '/page/'+req.params.id;
-
     data.params.feed_url = feed_url;
-
     data.params.page_info_url = '/'+req.params.id +'?fields=name,id,about,category,access_token,picture';
     exports.getPageDetails(req, res, data);
 };
@@ -213,10 +232,8 @@ exports.checkNextPagination = function(req, res, data) {
         if(result!=null && result.data.length !=0){
             data.next = '/page/'+data.params.id+'/posts/'+data.posts_type+ url.parse(data.posts.paging.next).search;
         }
-        
         data.params = null;
         exports.getIds(data);
-
         exports.getReaches(req,res,data);
       });
     }
@@ -256,31 +273,9 @@ exports.getIds = function(data){
   }
   data.reachs_id = ids;
 };
+// ********************************************************
 
-
-exports.defaultData = function(){
-  var data = {
-      "page_details": null,
-      "posts": null,
-      "reachs": null,
-      "reachs_id": null,
-      "prev": null,
-      "next": null,
-      "active_link": {
-        "published": null,
-        "unpublished": null
-      },
-      "posts_type": null,
-      "page_post_heading": null,
-      "base_url": null,
-      "scheduled_publish_time": null,
-      "params": {
-      }
-    };
-  return data;
-};
-
-// ********************** Post Calls ***********************
+// -- Post on the page
 router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScope}), function(req, res) {
 
   req.facebook.api('/'+req.params.id +'?fields=name,id,about,category,access_token','GET', function(err, result){
@@ -292,6 +287,8 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScop
     var data = {access_token: result.access_token};
     var api_url = '';
     var redirect_uri = "/page/"+req.params.id+'/posts/'+req.params.type;
+
+    // checking published, unpublished or scheduled
     if(req.params.type == "Unpublished"){
       data.published = 0;
       if(req.body.scheduleLater){
@@ -311,8 +308,7 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScop
       case "link":
           if(req.body.message){
             data.message = req.body.message;
-          }
-          else{
+          }else{
             data.message = req.body.link;
           }
           if(req.body.link) data.link = req.body.link;
@@ -330,7 +326,7 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScop
               };
             }
           }
-
+          
           api_url = '/'+req.params.id+'/feed';
           break;
       case "photo":
@@ -359,6 +355,6 @@ router.post('/page/:id/post/:type', Facebook.loginRequired({scope: requestedScop
   });
 
 });
-
+// ***********************************************************************************
 
 module.exports = router;
