@@ -132,15 +132,16 @@
 				}
 			
 			};
-		function formatedDate(value){
-			var date = new Date(value);
-			var hours = date.getHours();
-			var timeSuffix = (hours > 11)? "pm" : "am";
-			hours = (hours > 11)? hours-12 : hours;
-			var minutes = date.getMinutes();
-			minutes = (minutes < 10)? '0'+minutes : minutes;
-			var dateFormat = (date.getMonth()+1)+'/'+date.getDate()+'/'+date.getFullYear()+' at '+hours+':'+minutes+' '+timeSuffix;
-			return dateFormat;
-		};
+
+			function formatedDate(value){
+				var date = new Date(value);
+				var hours = date.getHours();
+				var timeSuffix = (hours > 11)? "pm" : "am";
+				hours = (hours > 11)? hours-12 : hours;
+				var minutes = date.getMinutes();
+				minutes = (minutes < 10)? '0'+minutes : minutes;
+				var dateFormat = (date.getMonth()+1)+'/'+date.getDate()+'/'+date.getFullYear()+' at '+hours+':'+minutes+' '+timeSuffix;
+				return dateFormat;
+			};
 		</script>
 	</div>
